@@ -1,0 +1,144 @@
+@import "../../vars.css";
+
+
+.container {
+  position: relative;
+  background-color: rgba(12, 12, 12, 0.6);
+  border-radius: 15px;
+  padding: 50px;
+  margin-top: 50px;
+  z-index: 1;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.educationcard {
+  margin: 20px;
+  /* display: flex; */
+  align-items: center;
+  color: #dad5d5;
+  background-color: #0d1150;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: 90%;
+  max-width: 1000px;
+}
+.logo img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.infoo{
+  /* display:flex ; */
+  margin-left: 30px;
+  margin-top: 20px;
+  align-items: center;
+}
+.educationdetails {
+  color: aliceblue;
+  flex: 1;
+}
+.educationdetails h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #dad5d5;
+}
+
+.expertdetails{
+  font-size:18px;
+  color: rgb(216, 216, 216);
+}
+
+.educationdetails p {
+  font-size: 16px;
+  color: #a1a1a1;
+  margin: 8px 0;
+}
+
+.educationdetails span {
+  font-size: 14px;
+  color: #777;
+}
+
+.title {
+  color: var(--color-text);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1.75px;
+  text-transform: uppercase;
+}
+
+
+.aboutItems {
+  color: var(--color-text);
+  display: flex;
+  /* flex-direction: column; */
+  gap: 40px;
+}
+
+.aboutItem {
+  display: flex;
+  /* flex-direction: row; */
+  /* align-items: center; */
+  border-radius: 20px;
+  list-style: none;
+  padding: 15px;
+  background-image: linear-gradient(
+    90deg,
+    rgba(165, 215, 232, 0.42) 5%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  /* background-image:
+    rgba(33, 30, 30, 0) 70%; */
+  background-size: 0 100%;
+  background-repeat: no-repeat;
+  transition: 0.3s;
+}
+
+.companyHeading{
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: #491606;
+}
+
+.aboutItem:hover {
+  background-size: 100% 100%;
+}
+
+.aboutItem h3 {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.aboutItem p {
+  font-size: 25px;
+}
+
+@media screen and (max-width: 830px) {
+  .container {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .content {
+    flex-direction: column;
+  }
+
+  .aboutImage {
+    display: none;
+  }
+
+  .aboutItems {
+    margin-top: 29px;
+  }
+
+  .aboutItem {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

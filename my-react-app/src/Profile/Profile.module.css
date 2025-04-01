@@ -1,0 +1,297 @@
+.profileContainer {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    padding: 35px;
+    gap: 25px;
+    width: 90%;
+    margin: auto;
+    margin-top: 1%;
+    
+    background-color: #393c59ab;
+}
+
+.leftPanel {
+    flex: 1;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: auto;
+}
+.aboutImage {
+    width: 45%;
+    height: 12%;
+    border-radius: 50%;
+    margin-top: 15%;
+    border-color: #333;
+    margin-bottom: 6%;
+}
+
+.userInfo {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.userInfo li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 16px;
+    flex: 1;
+    text-align: left;
+}
+
+.value {
+    font-size: 16px;
+    flex: 1;
+    text-align: right;
+}
+
+
+.rightPanel {
+    flex: 2;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.rightPanel h3{
+    text-align: center;
+}
+
+.detailsSection {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    align-items: center ;
+    margin-bottom: 20px;
+    background-color: #ececec;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    padding: 20px;
+    margin-top: 25px;
+    width: 90%;
+}
+
+.sectionHeading {
+    font-size: 15px;
+    font-weight: lighter;
+    color: #555;
+    margin-bottom: 6px;
+}
+.education{
+    list-style: none;
+    background-color: rgb(255, 255, 255);
+    margin-bottom:3px;
+    border: #ccc;
+}
+
+.sectionData {
+    padding: 10px;
+    background-color: #f7f7f7;
+    border: 1px solid #080606;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 17px;
+    font-weight: bolder;
+    color: #333;
+    margin-bottom: 20px;
+}
+.editbutn {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.updateButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-end;
+}
+
+.updateButton:hover {
+    background-color: #45a049;
+}
+
+.saveButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.saveButton:hover {
+    background-color: #0056b3;
+}
+
+.editableSection {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.editableSection label {
+    margin-bottom: 3px;
+    font-weight: bold;
+    color: #333;
+}
+
+.editableSection input,
+.editableSection textarea {
+    padding: 8px;
+    font-size:15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.editableSection textarea {
+    resize: none;
+    height: 80px;
+}
+
+/* Popup Modal */
+.popupModal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff; /* Same as rightPanel background */
+    border-radius: 10px;
+    padding: 20px; /* Same padding as rightPanel */
+    width: 90%; /* Similar width */
+    max-width: 600px; /* Optional: Limit the max width */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Same shadow as rightPanel */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.popupModal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.popupOverlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Form Styling inside the Popup */
+.popupModal form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Space between form elements */
+}
+
+.popupModal label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333; /* Same color as rightPanel headings */
+    margin-bottom: 5px;
+}
+
+.popupModal input,
+.popupModal textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd; /* Matches the border styling */
+    border-radius: 8px; /* Matches the rounded corners */
+    background-color: #f9f9f9; /* Matches the input section background */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    resize: none; /* Prevent resizing for textareas */
+}
+
+.popupModal textarea {
+    height: 80px; /* Default height for textareas */
+}
+
+.popupModal button {
+    align-self: flex-end; /* Align button to the right */
+    background-color: #007bff; /* Matches save button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.popupModal button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Close Button */
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+    color: #ff0000;
+}
+
+.uploadIconContainer {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .uploadIcon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: #007bff; 
+  }
