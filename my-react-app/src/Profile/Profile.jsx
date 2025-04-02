@@ -16,21 +16,8 @@ function Profile() {
     const [userData, setUserData] = useState(null);
     const [pendingProducts, setPendingProducts] = useState([]);
 const [approvedProducts, setApprovedProducts] = useState([]);
-  useEffect(() => {
-    // Fetch the profile picture when the component mounts
-    const fetchProfilePic = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/profile/photo/${email}`);
-        if (response.data.profilePic) {
-          setProfilePic(response.data.profilePic);
-        }
-      } catch (err) {
-        console.error("Failed to fetch profile picture:", err);
-      }
-    };
-
-    fetchProfilePic();
-  }, [email]);
+  
+    
 
   useEffect(() => {
     // Fetch profile info (including type)
@@ -73,14 +60,6 @@ const [approvedProducts, setApprovedProducts] = useState([]);
 
 useEffect(() => {
     if (userData?.type === "admin") {
-        axios.get("http://localhost:3001/admin/pending-requests")
-            .then(response => setPendingRequests(response.data))
-            .catch(error => console.error("Error fetching pending requests:", error));
-
-        axios.get("http://localhost:3001/admin/approved-requests")
-            .then(response => setApprovedRequests(response.data))
-            .catch(error => console.error("Error fetching approved requests:", error));
-
         // Fetch pending products
         axios.get("http://localhost:3001/admin/pending-products")
             .then(response => setPendingProducts(response.data))
@@ -203,6 +182,18 @@ useEffect(() => {
         setNewExperience({ companyName: "", role: "", startYear: "", endYear: "" });
     };
 
+    const handleApprove = async (productId) => {
+        try {
+            const response = await axios.post(`http://localhost:3001/admin/approve-product/${productId}`);
+            if (response.data.status === "Success") {
+                setPendingProducts(pendingProducts.filter(p => p._id !== productId)); // Remove from pending
+                setApprovedProducts([...approvedProducts, response.data.product]); // Add to approved list
+            }
+        } catch (error) {
+            console.error("Error approving product:", error);
+        }
+    };
+    
     const handleSave = () => {
         axios
             .post("http://localhost:3001/profile", formData)
@@ -218,98 +209,89 @@ useEffect(() => {
         return (
             <div className={styles.profileContainer}>
         <h2>Admin Dashboard</h2>
-
-        {/* Pending Requests Table */}
-        <div>
-            <h3>Pending User Requests</h3>
-            <table className={styles.table}>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Request Type</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pendingRequests.length > 0 ? (
-                        pendingRequests.map((req) => (
-                            <tr key={req.id}>
-                                <td>{req.name}</td>
-                                <td>{req.email}</td>
-                                <td>{req.requestType}</td>
-                                <td>
-                                    <button className={styles.approveBtn}>Approve</button>
-                                    <button className={styles.rejectBtn}>Reject</button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr><td colSpan="4">No pending requests</td></tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
-
+        
         {/* Pending Products Table */}
         <div>
             <h3>Pending Products</h3>
-            <table className={styles.table}>
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Description</th>
-                        <th>Email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {pendingProducts.length > 0 ? (
-                        pendingProducts.map((product) => (
-                            <tr key={product._id}>
-                                <td>{product.productName}</td>
-                                <td>{product.description}</td>
-                                <td>{product.email}</td>
-                                <td>
-                                    <button className={styles.approveBtn}>Approve</button>
-                                    <button className={styles.rejectBtn}>Reject</button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr><td colSpan="4">No pending products</td></tr>
-                    )}
-                </tbody>
-            </table>
+            <h3>Pending Products</h3>
+<section className={styles.container}>
+    {pendingProducts.length > 0 ? (
+        pendingProducts.map((product, index) => (
+            <div className={styles.content} key={product._id}>
+                {/* Product Image */}
+                <div className={styles.logo}>
+                    <img src={product.images && product.images.length > 0 ? product.images[0] : pfp2} 
+                        alt="Product Image" 
+                        className={styles.productImage} 
+                    />
+                </div>
+                
+                {/* Product Details */}
+                <div className={styles.specification}>
+                    <ul className={styles.aboutItems}>
+                        <li className={styles.aboutItem}>
+                            <div className={styles.aboutItemText}>
+                                <h2>{product.productName}</h2>
+                                <p><strong>Description:</strong> {product.description}</p>
+                                <p><strong>Tags:</strong> {product.tags ? product.tags.join(', ') : 'No tags available'}</p>
+                                <p><strong>Team Members:</strong> {product.team && product.team.length > 0 ? product.team.map(member => member.name).join(', ') : 'No team members'}</p>
+                                <p><strong>Email:</strong> {product.email}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Approve & Reject Buttons */}
+                <div className={styles.actionButtons}>
+                    <button className={styles.approveBtn} onClick={() => handleApprove(product._id)}>Approve</button>
+                    <button className={styles.rejectBtn}>Reject</button>
+                </div>
+            </div>
+        ))
+    ) : (
+        <p className={styles.noResults}>No pending products</p>
+    )}
+</section>
+
         </div>
 
         {/* Approved Products Table */}
         <div>
-            <h3>Approved Products</h3>
-            <table className={styles.table}>
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Description</th>
-                        <th>Email</th>
-                        <th>Approved On</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {approvedProducts.length > 0 ? (
-                        approvedProducts.map((product) => (
-                            <tr key={product._id}>
-                                <td>{product.productName}</td>
-                                <td>{product.description}</td>
-                                <td>{product.email}</td>
-                                <td>{new Date(product.createdAt).toLocaleDateString()}</td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr><td colSpan="4">No approved products</td></tr>
-                    )}
-                </tbody>
-            </table>
+        <h3>Approved Products</h3>
+<section className={styles.container}>
+    {approvedProducts.length > 0 ? (
+        approvedProducts.map((product, index) => (
+            <div className={styles.content} key={product._id}>
+                {/* Product Image */}
+                <div className={styles.logo}>
+                    <img src={product.images && product.images.length > 0 ? product.images[0] : pfp2} 
+                        alt="Product Image" 
+                        className={styles.productImage} 
+                    />
+                </div>
+                
+                {/* Product Details */}
+                <div className={styles.specification}>
+                    <ul className={styles.aboutItems}>
+                        <li className={styles.aboutItem}>
+                            <div className={styles.aboutItemText}>
+                                <h2>{product.productName}</h2>
+                                <p><strong>Description:</strong> {product.description}</p>
+                                <p><strong>Tags:</strong> {product.tags ? product.tags.join(', ') : 'No tags available'}</p>
+                                <p><strong>Team Members:</strong> {product.team && product.team.length > 0 ? product.team.map(member => member.name).join(', ') : 'No team members'}</p>
+                                <p><strong>Email:</strong> {product.email}</p>
+                                <p><strong>Approved On:</strong> {new Date(product.createdAt).toLocaleDateString()}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        ))
+    ) : (
+        <p className={styles.noResults}>No approved products</p>
+    )}
+</section>
+
         </div>
     </div>
         );

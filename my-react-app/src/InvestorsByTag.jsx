@@ -42,7 +42,7 @@ const InvestorsByTag = () => {
     return (
         <div className={styles.Body}>
             <div>
-                <h2 className={styles.filterTagMessage}>Investors tagged with : "{tagName}"</h2>
+                <h2 className={styles.filterTagMessage}>Investors with tag: "{tagName}"</h2>
                 {investors.length > 0 ? (
                     <section className={styles.container}>
                         {investors.map((profile) => (

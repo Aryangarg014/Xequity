@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../Login/Login.module.css";
-import Login_icon from "../assets/investor.png";
+import Login_icon from "../assets/Investor.png";
 import Email_icon from "../assets/emailIcon.png";
 import Password_icon from "../assets/password_icon.png";
 import axios from "axios";

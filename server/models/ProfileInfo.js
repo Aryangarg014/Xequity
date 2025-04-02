@@ -30,6 +30,18 @@ const ProfileInfoSchema = new mongoose.Schema({
             likecomp: { type: String }
         }
     ],
+    likesposts: [
+        {
+            likecomp: { type: String }
+        }
+    ],
+    comments: [
+        {
+            postId: String,
+            comment: String,
+            createdAt: { type: Date, default: Date.now }
+        }
+    ],
     tags: {
         type: [String], 
         required: true, 

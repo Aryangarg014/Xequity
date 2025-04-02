@@ -100,7 +100,7 @@
   justify-content: center; /* Center the buttons horizontally */
 }
 
-.tag{
+.tag {
   background-color: #1d4975; /* Button background color */
   color: #ffffff; /* Text color */
   border: none; /* Remove default button border */

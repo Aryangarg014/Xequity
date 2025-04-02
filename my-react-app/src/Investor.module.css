@@ -19,8 +19,8 @@
     border-radius: 15px;
     display: grid; 
     padding: 30px;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust minmax value as needed */
-    grid-gap: 5px; 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust minmax value as needed */
+  grid-gap: 5px; 
     width:1000px;
     margin:5px;
     margin-left:150px;

@@ -14,10 +14,7 @@ import Insert from "./InsertProduct/Insert";
 import Forum from "./Forum"; // Import Form.jsx
 import InvestorsByTag from "./InvestorsByTag"; // Filter Investors by Tag
 import ProductsByTag from "./ProductsByTag"; // Filter Products by Tag
-
-
-
-
+import CreatePost from "./CreatePost";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -33,12 +30,13 @@ function App() {
       />
       <Routes>
         <Route path="/InvestorPage/:email" element={<InvestorPage />} />
-        <Route path="/" element={isLoggedIn ? <Forum /> : <Navigate to="/register" />} />
+        <Route path="/" element={isLoggedIn ? <Forum useremail={userData?.email} username = {userData?.name}/> : <Navigate to="/register" />} />
         <Route path="/register" element={<SignUp />} />
         <Route
           path="/login"
           element={<Login setIsLoggedIn={setIsLoggedIn} setUserData={setUserData} />}
         />
+        <Route path="/CreatePost" element={isLoggedIn ? <CreatePost useremail={userData?.email} username = {userData?.name}/> : <Navigate to="/register" />} />
         <Route path="/investor" element={isLoggedIn ? <Investor /> : <Navigate to="/login" />} />
         <Route path="/InvestorPage" element={isLoggedIn ? <InvestorPage /> : <Navigate to="/login" />} />
         <Route path="/product" element={isLoggedIn ? <Product useremail={userData?.email} /> : <Navigate to="/login" />} />

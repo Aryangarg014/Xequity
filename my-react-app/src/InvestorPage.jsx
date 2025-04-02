@@ -38,7 +38,7 @@ const InvestorPage = () => {
         <div>
             {/* Pass email along with other profile data to the child components */}
             {console.log(profile.tags)};
-            <Hero email={email} name={profile.firstName} description={profile.description}/>
+            <Hero  email={email} name={profile.firstName} description={profile.description}/>
             <Experience email={email} experience={profile.experience} />
             <About email={email} education={profile.education} />
             {/* <Contact /> */}

@@ -10,7 +10,7 @@ const ProfileInfoModel = require("./models/ProfileInfo");
 const ProfilePicModel = require("./models/ProfilePic");
 const ProductInfoModel = require("./models/ProductInfo");
 const PostModel = require("./models/Post")
-const AdminModel = require("./models/Admin");
+const AdminModel = require("./models/admin");
 const ProductModel = require("./models/Product");  // Import Product.js model
 
 
@@ -91,27 +91,54 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
-// Register route
 app.post("/register", async (req, res) => {
     const { name, email, password, signupType } = req.body;
+    console.log("Received signup request:", req.body);
+
     try {
+        if (!name || !email || !password || !signupType) {
+            return res.status(400).json({ status: "Error", message: "Missing required fields" });
+        }
+
         const existingUser = await UserModel.findOne({ email });
-        if (existingUser) return res.status(400).json({ status: "Error", message: "Email already registered" });
+        if (existingUser) {
+            return res.status(400).json({ status: "Error", message: "Email already registered" });
+        }
 
-        // Determine user type based on signupType selection
         const userType = signupType === "product" ? "company" : "investor";
+        const defaultTags = userType === "company" ? ["startup", "business"] : ["investor", "finance"];
 
-        // Create the user
+        console.log("✅ Creating user...");
         const user = await UserModel.create({ name, email, password });
 
-        // Automatically create corresponding profile records
-        await ProfileInfoModel.create({ email, type: userType, firstName: name });
-        await ProfilePicModel.create({ email });
+        console.log("✅ Creating profile info...");
+        try {
+            const profile = await ProfileInfoModel.create({ 
+                email, 
+                type: userType, 
+                firstName: name, 
+                tags: defaultTags  // ✅ Provide default tags to avoid validation error
+            });
+            console.log("🎉 ProfileInfo created successfully:", profile);
+        } catch (err) {
+            console.error("❌ Error creating ProfileInfo:", err);
+            return res.status(500).json({ status: "Error", message: "Failed to create profile info", error: err.message });
+        }
 
+        console.log("✅ Creating profile picture entry...");
+        try {
+            await ProfilePicModel.create({ email });
+        } catch (err) {
+            console.error("❌ Error creating ProfilePic:", err);
+            return res.status(500).json({ status: "Error", message: "Failed to create profile picture", error: err.message });
+        }
+
+        console.log("🎉 Signup successful!");
         res.json({ status: "Success", user });
+
     } catch (error) {
-        console.error("Registration error:", error);
-        res.status(500).json({ status: "Error", message: "Failed to create user or profile" });
+        console.error("❌ Registration error:", error);
+        res.status(500).json({ status: "Error", message: "Failed to create user or profile", error: error.message });
     }
 });
 
@@ -132,28 +159,142 @@ app.get("/posts", async (req, res) => {
 
 
 // Upvote a post
-app.post("/posts/:id/upvote", async (req, res) => {
-    const { id } = req.params;
+
+app.get("/posts/:postid/:usermail", async (req, res) => {
     try {
-        const post = await PostModel.findByIdAndUpdate(id, { $inc: { upvotes: 1 } }, { new: true });
-        res.json({ status: "Success", post });
+        const { postid, usermail } = req.params;
+
+        const user = await ProfileInfoModel.findOne({ email: usermail });
+
+        if (!user) {
+            return res.status(404).json({ status: "Error", message: `User not found ${usermail}` });
+        }
+
+        const alreadyLiked = user.likesposts.some((post) => post.likecomp === postid);
+        let count = 0;
+
+        if (!alreadyLiked) {
+            // Add post to liked list
+            user.likesposts.push({ likecomp: postid });
+            await user.save();
+
+            const postinfo = await PostModel.findById(postid);
+            if (!postinfo) {
+                return res.status(404).json({ status: "Error", message: "Post not found" });
+            }
+
+            postinfo.upvotes += 1;
+            count = postinfo.upvotes;
+            await postinfo.save();
+
+            return res.status(200).json({ status: "Success", message: "Upvoted successfully", count });
+        } else {
+            // Remove the like
+            user.likesposts = user.likesposts.filter((post) => post.likecomp !== postid);
+            await user.save();
+
+            const postinfo = await PostModel.findById(postid);
+            if (!postinfo) {
+                return res.status(404).json({ status: "Error", message: "Post not found" });
+            }
+
+            postinfo.upvotes -= 1;
+            count = postinfo.upvotes;
+            await postinfo.save();
+
+            return res.status(200).json({ status: "Success", message: "Upvote removed", count });
+        }
     } catch (error) {
-        res.status(500).json({ status: "Error", message: "Failed to upvote post" });
+        console.error("Error updating upvotes:", error);
+        res.status(500).json({ status: "Error", message: "Server Error" });
     }
 });
 
 // Add a comment to a post
 app.post("/posts/:id/comment", async (req, res) => {
     const { id } = req.params;
-    const { email, comment } = req.body;
+    const { email, text } = req.body;
+
+    if (!email || !text) {
+        return res.status(400).json({ status: "Error", message: "Email and comment text are required" });
+    }
+
     try {
-        const newComment = new CommentModel({ postId: id, email, comment });
-        await newComment.save();
-        res.status(201).json({ status: "Success", comment: newComment });
+        // Fetch user details to get the name
+        const user = await ProfileInfoModel.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ status: "Error", message: "User not found" });
+        }
+
+        // Find post and update comments
+        const post = await PostModel.findByIdAndUpdate(
+            id,
+            { $push: { comments: { email, name: user.firstName, text } } },  // Store name
+            { new: true }
+        );
+
+        if (!post) {
+            return res.status(404).json({ status: "Error", message: "Post not found" });
+        }
+
+        res.status(201).json({ status: "Success", post });
     } catch (error) {
+        console.error("Error adding comment:", error);
         res.status(500).json({ status: "Error", message: "Failed to add comment" });
     }
 });
+
+
+// Fetch all comments for a specific post
+app.get("/posts/:id/comments", async (req, res) => {
+    try {
+        const post = await PostModel.findById(req.params.id).select("comments");
+        if (!post) {
+            return res.status(404).json({ status: "Error", message: "Post not found" });
+        }
+        res.json({ status: "Success", comments: post.comments });
+    } catch (error) {
+        console.error("Error fetching comments:", error);
+        res.status(500).json({ status: "Error", message: "Failed to fetch comments" });
+    }
+});
+
+// Make a post
+// Create a new post with optional image upload
+app.post("/create-post", upload.array("images"), async (req, res) => {
+    try {
+        const { email, title, content } = req.body;
+
+        if (!email || !title || !content) {
+            return res.status(400).json({ status: "Error", message: "Email, title, and content are required." });
+        }
+
+        // Fetch the user's name from ProfileInfo
+        const user = await ProfileInfoModel.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ status: "Error", message: "User not found" });
+        }
+
+        const imagePaths = req.files?.map(file => `http://localhost:3001/uploads/${file.filename}`) || [];
+
+        const newPost = new PostModel({
+            email,
+            name: user.firstName, // Store the user's name
+            title,
+            content,
+            image: imagePaths,
+        });
+
+        await newPost.save();
+
+        res.status(201).json({ status: "Success", message: "Post created successfully", post: newPost });
+    } catch (error) {
+        console.error("Error creating post:", error);
+        res.status(500).json({ status: "Error", message: "Failed to create post" });
+    }
+});
+
+
 
 
 // ======================== PROFILE ROUTES ======================== //
@@ -396,7 +537,6 @@ app.get("/products-by-tag/:tag", async (req, res) => {
     }
 });
 
-
 app.get("/product/:email/:usermail", async (req, res) => {
     try {
         const { email, usermail } = req.params;
@@ -492,6 +632,7 @@ app.get("/admin/pending-products", async (req, res) => {
     }
 });
 
+
 // Get approved products
 app.get("/admin/approved-products", async (req, res) => {
     try {
@@ -502,7 +643,44 @@ app.get("/admin/approved-products", async (req, res) => {
     }
 });
 
+// admin approve products
 
+app.post("/admin/approve-product/:id", async (req, res) => {
+    try {
+        const updatedProduct = await ProductModel.findByIdAndUpdate(
+            req.params.id,
+            { status: "approved" },  // ✅ Update status
+            { new: true }            // Return the updated document
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ status: "Error", message: "Product not found" });
+        }
+
+        // Also add to ProductInfo collection if not already there
+        const existingProduct = await ProductInfoModel.findOne({ email: updatedProduct.email });
+
+        if (!existingProduct) {
+            const newProduct = new ProductInfoModel({
+                productName: updatedProduct.productName,
+                description: updatedProduct.description,
+                tags: updatedProduct.tags,
+                team: updatedProduct.team,
+                images: updatedProduct.images,
+                email: updatedProduct.email,
+                upvote: updatedProduct.upvote,
+                status: "approved"
+            });
+
+            await newProduct.save();
+        }
+
+        res.json({ status: "Success", message: "Product approved", product: updatedProduct });
+    } catch (err) {
+        console.error("Approval error:", err);
+        res.status(500).json({ status: "Error", message: "Failed to approve product" });
+    }
+});
 
 
 // ======================== SERVER START ======================== //
