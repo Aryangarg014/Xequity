@@ -5,12 +5,30 @@ import styles from "./CreatePost.module.css";
 const CreatePost = ({ useremail, username }) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]); // Changed to array of files
   const [error, setError] = useState("");
-
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (e) => {
-    setImage([...e.target.files]); // Store multiple files in state
+    const file = e.target.files[0]; // Get single file
+    if (file) {
+      setImages(prevImages => [...prevImages, file]);
+    }
+    // Reset input value to allow selecting the same file again
+    e.target.value = '';
+  };
+
+  const removeImage = (index) => {
+    setImages(prevImages => prevImages.filter((_, i) => i !== index));
+  };
+
+  const handleImageClick = (file) => {
+    const imageUrl = URL.createObjectURL(file);
+    setSelectedImage(imageUrl);
+  };
+
+  const closeImagePopup = () => {
+    setSelectedImage(null);
   };
   
   const handleSubmit = async (e) => {
@@ -28,9 +46,7 @@ const CreatePost = ({ useremail, username }) => {
     formData.append("title", title);
     formData.append("content", content);
     
-    if (image.length > 0) {
-      image.forEach((file) => formData.append("images", file)); // Append multiple files
-    }
+    images.forEach((file) => formData.append("images", file));
   
     try {
       await axios.post("http://localhost:3001/create-post", formData, {
@@ -39,13 +55,12 @@ const CreatePost = ({ useremail, username }) => {
       alert("Post created successfully!");
       setTitle("");
       setContent("");
-      setImage([]);
+      setImages([]);
     } catch (error) {
       setError("Failed to create post");
       console.error("Post creation error:", error);
     }
   };
-  
   
   return (
     <div className={styles.container}>
@@ -64,8 +79,50 @@ const CreatePost = ({ useremail, username }) => {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           className={styles.textarea}
-        ></textarea>
-        <input type="file" accept="image/*" onChange={handleImageChange} className={styles.fileInput} />
+        />
+        <div className={styles.fileSection}>
+          <input 
+            type="file" 
+            accept="image/*" 
+            onChange={handleImageChange} 
+            className={styles.fileInput}
+          />
+          {images.length > 0 && (
+            <div className={styles.selectedFiles}>
+              {images.map((file, index) => (
+                <div key={index} className={styles.fileItem}>
+                  <span 
+                    className={styles.fileName}
+                    onClick={() => handleImageClick(file)}
+                  >
+                    {file.name}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className={styles.removeButton}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        {/* Image Popup */}
+        {selectedImage && (
+          <div className={styles.imagePopup} onClick={closeImagePopup}>
+            <div className={styles.imagePopupContent}>
+              <img src={selectedImage} alt="Preview" />
+              <button 
+                className={styles.closePopup}
+                onClick={closeImagePopup}
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        )}
         <button type="submit" className={styles.button}>Create Post</button>
       </form>
     </div>

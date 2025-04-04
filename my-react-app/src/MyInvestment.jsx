@@ -1,54 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import styles from "./MyInvestment.module.css"; // Import CSS
+import styles from "./MyInvestment.module.css";
 
-const MyInvestment = () => {
-    const { email } = useParams();
+const MyInvestment = ({ useremail }) => {
     const [tokens, setTokens] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchTokens = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3001/api/user-tokens/${email}`);
-                setTokens(response.data);
-            } catch (error) {
-                console.error("Error fetching tokens:", error);
+    // Function to fetch investments
+    const fetchInvestments = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/api/my-investments/${useremail}`);
+            if (response.data.status === "Success") {
+                setTokens(response.data.tokens);
+                // console.log("Fetched.");
+            } else {
+                console.error("Failed to fetch investments:", response.data.message);
             }
-        };
-
-        if (email) {
-            fetchTokens();
+        } catch (error) {
+            console.error("Error fetching investments:", error);
+        } finally {
+            setLoading(false);
         }
-    }, [email]);
+    };
+
+    // Fetch investments on component mount and set up interval for updates
+    useEffect(() => {
+        fetchInvestments(); // Initial fetch
+
+        const interval = setInterval(() => {
+            fetchInvestments(); // Fetch updated data every 5 seconds
+        }, 5000);
+
+        return () => clearInterval(interval); // Cleanup interval on component unmount
+    }, [useremail]);
+
+    if (loading) {
+        return <p>Loading investments...</p>;
+    }
+
+    if (tokens.length === 0) {
+        return <p>No investments found.</p>;
+    }
 
     return (
-        <div className={styles.container}>
-            <h1>My Investments</h1>
-            {tokens.length > 0 ? (
-                <div className={styles.tableContainer}>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Token Name</th>
-                                <th>Quantity</th>
-                                <th>Average Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tokens.map((token, index) => (
-                                <tr key={index}>
-                                    <td>{token.tokenmail}</td>
-                                    <td>{token.quantity}</td>
-                                    <td>₹{token.avgprice.toFixed(2)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+        <div className={styles.investmentContainer}>
+            {tokens.map((token, index) => (
+                <div key={index} className={styles.card}>
+                    <div className={styles.left}>
+                        <img
+                            src={token.image ? `http://localhost:3001${token.image}` : "/default-token.png"}
+                            alt={token.tokename}
+                            className={styles.tokenImage}
+                        />
+                        <h3>{token.tokename}</h3>
+                        <p>Quantity: {token.quantity}</p>
+                    </div>
+                    <div className={styles.right}>
+                        <p>
+                            <strong>Current Price:</strong>{" "}
+                            <span className={styles.price}>
+                                ₹{token.currentPrice ? (token.currentPrice * token.quantity).toFixed(2) : "--"}
+                            </span>
+                        </p>
+                        <p>
+                            <strong>Average Price:</strong>{" "}
+                            <span className={styles.avgPrice}>
+                                ₹{(token.avgprice * token.quantity).toFixed(2)}
+                            </span>
+                        </p>
+                    </div>
                 </div>
-            ) : (
-                <p className={styles.noInvestments}>No investments found.</p>
-            )}
+            ))}
         </div>
     );
 };

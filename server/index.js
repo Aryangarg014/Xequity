@@ -14,6 +14,7 @@ const AdminModel = require("./models/admin");
 const ProductModel = require("./models/Product");  // Import Product.js model
 const UnverifiedUser = require("./models/Unverified");  // Adjust path if needed
 const VirtualTokenModel = require("./models/VirtualToken");
+const UserTokenModel = require('./models/UserToken');
 
 const app = express();
 app.use(express.json());
@@ -959,6 +960,50 @@ app.get("/api/virtual-assets", async (req, res) => {
         res.status(500).json({ error: error.message }); // Send actual error message
     }
 });
+
+// Tokens with complete data for my investments page
+app.get("/api/my-investments/:email", async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        // Fetch the user's tokens
+        const userTokens = await UserTokenModel.findOne({ email });
+
+        if (!userTokens) {
+            return res.status(404).json({ status: "Error", message: "User tokens not found" });
+        }   
+
+        // Fetch the current price and other details for each token
+        const tokensWithDetails = await Promise.all(
+            userTokens.tokens.map(async (token) => {
+                const virtualToken = await VirtualTokenModel.findOne({ email: token.tokenmail });
+
+                if (virtualToken) {
+                    return {
+                        tokename: token.tokename,
+                        tokenmail: token.tokenmail,
+                        quantity: token.quantity,
+                        avgprice: token.avgprice,
+                        currentPrice: virtualToken.CurrentPrice,
+                        image: virtualToken.image,
+                    };
+                }
+
+                return null; // Skip if no matching virtual token is found
+            })
+        );
+
+        // Filter out null values (tokens without matching virtual tokens)
+        const filteredTokens = tokensWithDetails.filter((token) => token !== null);
+
+        res.json({ status: "Success", tokens: filteredTokens });
+    } catch (error) {
+        console.error("Error fetching user investments:", error.message);
+        res.status(500).json({ status: "Error", message: "Server error" });
+    }
+});
+
+
 // ======================== SERVER START ======================== //
 
 app.listen(3001, () => {

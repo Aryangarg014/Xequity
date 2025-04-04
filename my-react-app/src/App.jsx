@@ -56,7 +56,7 @@ function App() {
         <Route path="/investors/tag/:tagName" element={<InvestorsByTag />} />
         <Route path="/products-by-tag/:tag" element={<ProductsByTag />} />
         <Route path="/update-product/:email" element={<Update />} />
-        <Route path="/MyInvestment/:email" element={isLoggedIn ? <MyInvestment/> : <Navigate to="/login" />} />
+        <Route path="/MyInvestment/:email" element={isLoggedIn ? <MyInvestment useremail={userData?.email} /> : <Navigate to="/login" />}/>
         <Route path="/VirtualAssets" element={isLoggedIn ? <VirtualAssets /> : <Navigate to="/login" />} />
       </Routes>
       <Footer />

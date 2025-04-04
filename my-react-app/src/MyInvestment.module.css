@@ -1,46 +1,85 @@
-.container {
-    max-width: 800px;
-    margin: 20px auto;
+.investmentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
     padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
 }
 
-h1 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-.table-container {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
-
-th, td {
-    padding: 12px;
+.card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    padding: 20px;
     border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
+    flex: 1;
 }
 
-th {
-    background-color: #007bff;
-    color: white;
+.tokenImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+    border: 2px solid #ddd;
 }
 
-td {
-    background-color: #f9f9f9;
-}
-
-.no-investments {
-    margin-top: 20px;
+.left h3 {
     font-size: 18px;
-    color: #777;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.left p {
+    font-size: 14px;
+    color: #555;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    flex: 1;
+}
+
+.right p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.right strong {
+    font-weight: bold;
+    color: #000;
+}
+
+.right .price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff; /* Highlighted color for prices */
+}
+
+.right .avgPrice {
+    font-size: 14px;
+    color: #28a745; /* Green color for average price */
 }

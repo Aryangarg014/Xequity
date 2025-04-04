@@ -9,6 +9,8 @@ const PostsPage = ({ useremail, username }) => {
   const [commentText, setCommentText] = useState("");
   const [visibleComments, setVisibleComments] = useState({});
   const [view, setView] = useState("all"); // "all", "myposts", "mycomments", "myupvotes"
+  const [userProfiles, setUserProfiles] = useState({}); // Store user profiles with their types and photos
+  const [selectedPostImage, setSelectedPostImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,14 +25,39 @@ const PostsPage = ({ useremail, username }) => {
     }
   }, [view]);
 
+  const fetchUserProfile = async (email) => {
+    try {
+      const profileResponse = await axios.get(`http://localhost:3001/profile/${email}`);
+      const photoResponse = await axios.get(`http://localhost:3001/profile/photo/${email}`);
+      
+      if (profileResponse.data.status === "Success") {
+        setUserProfiles(prev => ({
+          ...prev,
+          [email]: {
+            type: profileResponse.data.profile.type,
+            photo: photoResponse.data.profilePic || "/default-avatar.png",
+            name: profileResponse.data.profile.firstName || email
+          }
+        }));
+      }
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
   const fetchAllPosts = async () => {
     setLoading(true);
     try {
       const response = await axios.get("http://localhost:3001/posts");
       if (response.data.status === "Success") {
         setPosts(response.data.posts);
-      } else {
-        console.error("Failed to fetch posts");
+        const uniqueEmails = new Set(response.data.posts.map(post => post.email));
+        response.data.posts.forEach(post => {
+          post.comments?.forEach(comment => {
+            uniqueEmails.add(comment.email);
+          });
+        });
+        uniqueEmails.forEach(fetchUserProfile);
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -189,6 +216,23 @@ const PostsPage = ({ useremail, username }) => {
     }));
   };
 
+  const handleProfileClick = (email) => {
+    const userType = userProfiles[email]?.type;
+    if (userType === "investor") {
+      navigate(`/InvestorPage/${email}`);
+    } else if (userType === "company") {
+      navigate(`/ProductPage/${email}`);
+    }
+  };
+
+  const closePostImagePopup = () => {
+    setSelectedPostImage(null);
+  };
+
+  const handlePostImageClick = (imgSrc) => {
+    setSelectedPostImage(imgSrc.startsWith("http") ? imgSrc : `http://localhost:3001${imgSrc}`);
+  };
+
   return (
     <div className={styles.maindiv}>
       <div className={styles.header}>
@@ -216,7 +260,24 @@ const PostsPage = ({ useremail, username }) => {
       ) : (
         posts.map((post) => (
           <div key={post._id} className={styles.postContainer}>
-            <h3>{post.title}</h3>
+            <div className={styles.postHeader}>
+              <div 
+                className={styles.userProfile}
+                onClick={() => handleProfileClick(post.email)}
+              >
+                <img 
+                  src={userProfiles[post.email]?.photo || "/default-avatar.png"}
+                  alt="Profile" 
+                  className={styles.profilePic}
+                />
+                <span className={styles.userName}>
+                  {userProfiles[post.email]?.name || post.name}
+                </span>
+              </div>
+            </div>
+
+            <h3><strong>{post.title}</strong></h3>
+            <br />
             <p>{post.content}</p>
 
             <div className={styles.imageGrid}>
@@ -227,6 +288,7 @@ const PostsPage = ({ useremail, username }) => {
                     src={imgSrc.startsWith("http") ? imgSrc : `http://localhost:3001${imgSrc}`}
                     alt="Post"
                     className={styles.postImage}
+                    onClick={() => handlePostImageClick(imgSrc)}
                   />
                 ))}
             </div>
@@ -252,9 +314,20 @@ const PostsPage = ({ useremail, username }) => {
                     .filter((comment) => view !== "mycomments" || comment.email === useremail)
                     .map((comment) => (
                       <div key={comment._id} className={styles.comment}>
-                        <p>
-                          <strong>{comment.name || comment.email}:</strong> {comment.text}
-                        </p>
+                        <div 
+                          className={styles.commentHeader}
+                          onClick={() => handleProfileClick(comment.email)}
+                        >
+                          <img 
+                            src={userProfiles[comment.email]?.photo || "/default-avatar.png"}
+                            alt="Profile" 
+                            className={styles.commentProfilePic}
+                          />
+                          <span className={styles.commentUserName}>
+                            {userProfiles[comment.email]?.name || comment.name}
+                          </span>
+                        </div>
+                        <p className={styles.commentText}>{comment.text}</p>
                         {view === "mycomments" && comment.email === useremail && (
                           <button
                             onClick={() => deleteComment(post._id, comment._id)}
@@ -289,6 +362,20 @@ const PostsPage = ({ useremail, username }) => {
             )}
           </div>
         ))
+      )}
+
+      {selectedPostImage && (
+        <div className={styles.imagePopup} onClick={closePostImagePopup}>
+          <div className={styles.imagePopupContent}>
+            <img src={selectedPostImage} alt="Post" />
+            <button 
+              className={styles.closePopup}
+              onClick={closePostImagePopup}
+            >
+              ×
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
