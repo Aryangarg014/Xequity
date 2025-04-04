@@ -9,14 +9,15 @@ const UserModel = require("./models/User");
 const ProfileInfoModel = require("./models/ProfileInfo");
 const ProfilePicModel = require("./models/ProfilePic");
 const ProductInfoModel = require("./models/ProductInfo");
-const PostModel = require("./models/Post");
+const PostModel = require("./models/Post")
 const AdminModel = require("./models/admin");
 const ProductModel = require("./models/Product");  // Import Product.js model
+const UnverifiedUser = require("./models/Unverified");  // Adjust path if needed
+const VirtualTokenModel = require("./models/VirtualToken");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-
 // Middleware for serving uploaded profile pictures
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -47,7 +48,61 @@ const upload = multer({
     },
 });
 
-// ======================== AUTH ROUTES ======================== //
+// File upload configuration for PDFs
+const storage1 = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/"); // Store uploaded files in the "uploads" folder
+    },
+    filename: (req, file, cb) => {
+        cb(null, `${Date.now()}-${file.originalname}`);
+    },
+});
+
+const upload1 = multer({
+    storage: storage1,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === "application/pdf") {
+            cb(null, true);
+        } else {
+            cb(new Error("Invalid file type. Only PDFs are allowed!"));
+        }
+    },
+});
+
+// Ensure middleware is correctly applied for file uploads
+app.post("/register", upload1.single("pdfFile"), async (req, res) => {
+    try {
+        const { name, email, password, signupType } = req.body;
+        const pdfFilePath = req.file ? req.file.path : null;
+
+        if (!pdfFilePath) {
+            return res.status(400).json({ message: "PDF file is required." });
+        }
+
+        // Check if the user is already pending approval
+        const existingUser = await UnverifiedUser.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: "Email is already under review." });
+        }
+
+        // Create a new unverified user entry
+        const newUser = new UnverifiedUser({
+            name,
+            email,
+            password,
+            type: signupType,
+            pdfFile: pdfFilePath, // Store the file path
+            status: "pending",
+        });
+
+        await newUser.save();
+        res.status(200).json({ message: "Signup request submitted for verification." });
+
+    } catch (err) {
+        console.error("Error registering user:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
 
 // Login route
 app.post("/login", async (req, res) => {
@@ -67,8 +122,6 @@ app.post("/login", async (req, res) => {
         res.status(500).json({ status: "Error", message: "Database error" });
     }
 });
-
-
 // Admin login
 
 app.post('/admin/login', async (req, res) => {
@@ -90,57 +143,7 @@ app.post('/admin/login', async (req, res) => {
     }
 });
 
-app.post("/register", async (req, res) => {
-    const { name, email, password, signupType } = req.body;
-    console.log("Received signup request:", req.body);
 
-    try {
-        if (!name || !email || !password || !signupType) {
-            return res.status(400).json({ status: "Error", message: "Missing required fields" });
-        }
-
-        const existingUser = await UserModel.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ status: "Error", message: "Email already registered" });
-        }
-
-        const userType = signupType === "product" ? "company" : "investor";
-        const defaultTags = userType === "company" ? ["startup", "business"] : ["investor", "finance"];
-
-        console.log("✅ Creating user...");
-        const user = await UserModel.create({ name, email, password });
-
-        console.log("✅ Creating profile info...");
-        try {
-            const profile = await ProfileInfoModel.create({ 
-                email, 
-                type: userType, 
-                firstName: name, 
-                tags: defaultTags,  // ✅ Provide default tags to avoid validation error
-                likesposts: [],
-            });
-            console.log("🎉 ProfileInfo created successfully:", profile);
-        } catch (err) {
-            console.error("❌ Error creating ProfileInfo:", err);
-            return res.status(500).json({ status: "Error", message: "Failed to create profile info", error: err.message });
-        }
-
-        console.log("✅ Creating profile picture entry...");
-        try {
-            await ProfilePicModel.create({ email });
-        } catch (err) {
-            console.error("❌ Error creating ProfilePic:", err);
-            return res.status(500).json({ status: "Error", message: "Failed to create profile picture", error: err.message });
-        }
-
-        console.log("🎉 Signup successful!");
-        res.json({ status: "Success", user });
-
-    } catch (error) {
-        console.error("❌ Registration error:", error);
-        res.status(500).json({ status: "Error", message: "Failed to create user or profile", error: error.message });
-    }
-});
 
 // ======================== COMMUNITY FORUM ======================== //
 
@@ -412,9 +415,6 @@ app.delete("/comment/:postId/:commentId", async (req, res) => {
         res.status(500).json({ error: "Error deleting comment" });
     }
 });
-
-
-
 
 // ======================== PROFILE ROUTES ======================== //
 
@@ -730,7 +730,7 @@ app.get("/products/:email", async (req, res) => {
 // Fetch a single product by ID
 app.get("/product/:email", async (req, res) => {
     try {
-        const product = await ProductInfoModel.find({ email: req.params.email });
+        const product = await ProductInfoModel.findOne({ email: req.params.email });
         if (!product) {
             return res.status(404).json({ status: "Error", message: "Product not found" });
         }
@@ -738,6 +738,25 @@ app.get("/product/:email", async (req, res) => {
     } catch (error) {
         console.error("Error fetching product:", error);
         res.status(500).json({ status: "Error", message: "Server error" });
+    }
+});
+
+app.post("/update-product/:email", async (req, res) => {
+    try {
+        const updatedProduct = await ProductInfoModel.findOneAndUpdate(
+            { email: req.params.email },  // Search by email
+            { $set: req.body },  // Update only fields present in req.body
+            { new: true, runValidators: true, omitUndefined: true }  // Keep unchanged fields intact
+        );
+
+        if (!updatedProduct) {
+            return res.json({ status: "Error", message: "Product not found" });
+        }
+
+        res.json({ status: "Success", product: updatedProduct });
+    } catch (error) {
+        console.error("Update error:", error);
+        res.json({ status: "Error", message: "Failed to update product" });
     }
 });
 
@@ -800,8 +819,146 @@ app.post("/admin/approve-product/:id", async (req, res) => {
         res.status(500).json({ status: "Error", message: "Failed to approve product" });
     }
 });
+// Fetch pending users
+app.get("/pending-users", async (req, res) => {
+    try {
+        const pendingUsers = await UnverifiedUser.find({ status: "pending" });
+        res.status(200).json(pendingUsers);
+    } catch (err) {
+        console.error("Error fetching pending users:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+// Fetch approved users
+app.get("/approved-users", async (req, res) => {
+    try {
+        const approvedUsers = await UnverifiedUser.find({ status: "approved" });
+        res.status(200).json(approvedUsers);
+    } catch (err) {
+        console.error("Error fetching approved users:", err);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
 
 
+
+// Approve Pending User API
+app.post("/admin/approve-user/:email", async (req, res) => {
+    const { email } = req.params;
+    
+    try {
+        // Find user in Unverified collection
+        const unverifiedUser = await UnverifiedUser.findOne({ email });
+
+        if (!unverifiedUser) {
+            return res.status(404).json({ status: "Error", message: "User not found" });
+        }
+
+        // Store user data in Users collection
+        const newUser = new UserModel({
+            name: unverifiedUser.name,
+            email: unverifiedUser.email,
+            password: unverifiedUser.password,
+            type: unverifiedUser.type
+        });
+        await newUser.save();
+
+        // Store basic info in ProfileInfo
+        const newProfileInfo = new ProfileInfoModel({
+            email: unverifiedUser.email,
+            type: unverifiedUser.type,
+            
+        });
+        await newProfileInfo.save();
+
+        // Update status in Unverified collection
+        unverifiedUser.status = "approved";
+        await unverifiedUser.save();
+
+        return res.json({ 
+            status: "Success", 
+            user: { 
+                email: newUser.email, 
+                name: newUser.name,
+                type: newUser.type 
+            } 
+        });
+
+    } catch (error) {
+        console.error("Error approving user:", error);
+        res.status(500).json({ status: "Error", message: "Internal Server Error" });
+    }
+});
+
+// Add this route in your index.js file (backend)
+app.post("/admin/reject-user/:email", async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        // Find the pending user in Unverified collection
+        const unverifiedUser = await UnverifiedUser.findOne({ email, status: "pending" });
+
+        if (!unverifiedUser) {
+            return res.status(404).json({ 
+                status: "Error", 
+                message: "Pending user not found or already processed" 
+            });
+        }
+
+        // Update status to rejected (don't create entries in User or ProfileInfo collections)
+        unverifiedUser.status = "rejected";
+        await unverifiedUser.save();
+
+        // Optional: Delete the uploaded PDF file
+        if (unverifiedUser.pdfFile) {
+            const filePath = path.join(__dirname, unverifiedUser.pdfFile);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        }
+
+        res.json({ 
+            status: "Success", 
+            message: "User rejected successfully",
+            email: unverifiedUser.email
+        });
+
+    } catch (error) {
+        console.error("Error rejecting user:", error);
+        res.status(500).json({ 
+            status: "Error", 
+            message: "Internal Server Error",
+            error: error.message 
+        });
+    }
+});
+
+// ======================== API to fetch user tokens by email ======================== //
+app.get("/api/user-tokens/:email", async (req, res) => {
+    try {
+        const { email } = req.params;
+        const userTokens = await UserTokenModel.findOne({ email });
+
+        if (!userTokens) {
+            return res.status(404).json({ message: "User tokens not found" });
+        }
+
+        res.json(userTokens.tokens); // Return only the tokens array
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+app.get("/api/virtual-assets", async (req, res) => {
+    try {
+        const assets = await VirtualTokenModel.find();
+        res.json(assets);
+    } catch (error) {
+        console.error("Error fetching virtual assets:", error.message); // Log error message
+        res.status(500).json({ error: error.message }); // Send actual error message
+    }
+});
 // ======================== SERVER START ======================== //
 
 app.listen(3001, () => {

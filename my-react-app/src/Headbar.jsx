@@ -37,7 +37,7 @@ function Headbar({ isLoggedIn, userName, setUserName, setIsLoggedIn, userData })
   const handleMyProductsRedirect = () => {
     closeDropdown();
     if (userData?.email) {
-      navigate(`/company/${userData.email}`); // Redirects to Company.jsx
+      navigate(`/company/${userData.email}`, { state: { loggedInEmail: userData.email } }); // Redirects to Company.jsx
     }
   };
 
@@ -57,8 +57,8 @@ function Headbar({ isLoggedIn, userName, setUserName, setIsLoggedIn, userData })
           </NavLink>
         </li>
         <li>
-          <NavLink to="/launch" className={({ isActive }) => (isActive ? "active-link" : "")}>
-            Launch
+          <NavLink to="/VirtualAssets" className={({ isActive }) => (isActive ? "active-link" : "")}>
+            Virtual Assets
           </NavLink>
         </li>
         <li>

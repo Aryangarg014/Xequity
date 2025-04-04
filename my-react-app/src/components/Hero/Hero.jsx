@@ -8,6 +8,7 @@ export const Hero = ({ email, name, description }) => {
   const [loading, setLoading] = useState(true); // State to track loading state
   const [tags, setTags] = useState([]); // State to store tags
 
+  // {console.log(email)}
   useEffect(() => {
     // Fetch profile picture and tags based on email when component mounts
     const fetchProfilePic = async () => {

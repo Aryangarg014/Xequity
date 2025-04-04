@@ -1,0 +1,73 @@
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    width: calc(50% - 20px); /* Two cards per row */
+    background: linear-gradient(#0376be, #0072ff);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.imageContainer {
+    flex: 1;
+}
+
+.image {
+    width: 1000%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.details {
+    flex: 1;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.details h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.details p {
+    font-size: 18px;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        width: 100%; /* Stack cards on smaller screens */
+    }
+
+    .image {
+        width: 100%;
+        height: auto;
+    }
+
+    .details {
+        padding-top: 10px;
+        text-align: center;
+    }
+}
