@@ -15,6 +15,8 @@ const ProductModel = require("./models/Product");  // Import Product.js model
 const UnverifiedUser = require("./models/Unverified");  // Adjust path if needed
 const VirtualTokenModel = require("./models/VirtualToken");
 const UserTokenModel = require('./models/UserToken');
+const OTPModel = require('./models/otp');
+const { sendOTP } = require('./config/emailConfig');
 
 const app = express();
 app.use(express.json());
@@ -76,32 +78,76 @@ app.post("/register", upload1.single("pdfFile"), async (req, res) => {
         const { name, email, password, signupType } = req.body;
         const pdfFilePath = req.file ? req.file.path : null;
 
+        // Detailed validation
+        if (!name || !email || !password || !signupType) {
+            return res.status(400).json({ 
+                message: "All fields are required. Please fill in all information." 
+            });
+        }
+
         if (!pdfFilePath) {
-            return res.status(400).json({ message: "PDF file is required." });
+            return res.status(400).json({ 
+                message: "Please upload a PDF file." 
+            });
         }
 
-        // Check if the user is already pending approval
-        const existingUser = await UnverifiedUser.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: "Email is already under review." });
+        // Check if email is verified in OTP collection
+        const otpRecord = await OTPModel.findOne({ email });
+        if (!otpRecord) {
+            // If OTP record doesn't exist, check if it was recently verified
+            const recentlyVerified = await OTPModel.findOne({ 
+                email, 
+                verified: true,
+                createdAt: { $gt: new Date(Date.now() - 5 * 60 * 1000) } // within last 5 minutes
+            });
+
+            if (!recentlyVerified) {
+                return res.status(400).json({ 
+                    message: "Please verify your email before signing up." 
+                });
+            }
         }
 
-        // Create a new unverified user entry
+        // Check existing users
+        const existingVerifiedUser = await UserModel.findOne({ email });
+        if (existingVerifiedUser) {
+            return res.status(400).json({ 
+                message: "This email is already registered." 
+            });
+        }
+
+        const existingUnverifiedUser = await UnverifiedUser.findOne({ email });
+        if (existingUnverifiedUser) {
+            return res.status(400).json({ 
+                message: "Your registration is already under review." 
+            });
+        }
+
+        // Create new unverified user
         const newUser = new UnverifiedUser({
             name,
             email,
             password,
             type: signupType,
-            pdfFile: pdfFilePath, // Store the file path
+            pdfFile: pdfFilePath,
             status: "pending",
         });
 
         await newUser.save();
-        res.status(200).json({ message: "Signup request submitted for verification." });
+        
+        // Delete the OTP record after successful registration
+        await OTPModel.deleteOne({ email });
+
+        res.status(200).json({ 
+            status: "Success",
+            message: "Your signup request has been submitted for verification." 
+        });
 
     } catch (err) {
-        console.error("Error registering user:", err);
-        res.status(500).json({ message: "Internal Server Error" });
+        console.error("Registration error:", err);
+        res.status(500).json({ 
+            message: "An error occurred during registration. Please try again." 
+        });
     }
 });
 
@@ -1003,6 +1049,99 @@ app.get("/api/my-investments/:email", async (req, res) => {
     }
 });
 
+// ======================== OTP ROUTES ======================== //
+
+app.post("/send-otp", async (req, res) => {
+    const { email } = req.body;
+    
+    try {
+        // Check if email exists in User collection
+        const existingVerifiedUser = await UserModel.findOne({ email });
+        if (existingVerifiedUser) {
+            return res.status(400).json({ 
+                status: "Error", 
+                message: "Email already registered and verified" 
+            });
+        }
+
+        // Check if email exists in UnverifiedUser collection
+        const existingUnverifiedUser = await UnverifiedUser.findOne({ email });
+        if (existingUnverifiedUser) {
+            return res.status(400).json({ 
+                status: "Error", 
+                message: "Email is already under review" 
+            });
+        }
+
+        // Generate 6-digit OTP
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        
+        // Save OTP to database
+        await OTPModel.findOneAndUpdate(
+            { email },
+            { otp },
+            { upsert: true, new: true }
+        );
+
+        // Send OTP via email
+        const emailSent = await sendOTP(email, otp);
+        
+        if (emailSent) {
+            res.json({ 
+                status: "Success", 
+                message: "OTP sent successfully" 
+            });
+        } else {
+            res.status(500).json({ 
+                status: "Error", 
+                message: "Failed to send OTP" 
+            });
+        }
+    } catch (error) {
+        console.error("Error sending OTP:", error);
+        res.status(500).json({ 
+            status: "Error", 
+            message: "Server error" 
+        });
+    }
+});
+
+app.post("/verify-otp", async (req, res) => {
+    const { email, otp } = req.body;
+
+    try {
+        const otpRecord = await OTPModel.findOne({ email });
+        
+        if (!otpRecord) {
+            return res.status(400).json({
+                status: "Error",
+                message: "OTP expired or not found"
+            });
+        }
+
+        if (otpRecord.otp !== otp) {
+            return res.status(400).json({
+                status: "Error",
+                message: "Invalid OTP"
+            });
+        }
+
+        // Mark as verified
+        otpRecord.verified = true;
+        await otpRecord.save();
+
+        res.json({
+            status: "Success",
+            message: "Email verified successfully"
+        });
+    } catch (error) {
+        console.error("Error verifying OTP:", error);
+        res.status(500).json({
+            status: "Error",
+            message: "Server error"
+        });
+    }
+});
 
 // ======================== SERVER START ======================== //
 
