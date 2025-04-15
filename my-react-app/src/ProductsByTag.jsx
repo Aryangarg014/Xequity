@@ -28,15 +28,20 @@ function ProductsByTag() {
     return (
         <div className={styles.Body}>
             <div>
-                <h2 className={styles.filterTagMessage}>Products tagged with : "{tag}"</h2>
+                <h2 className={styles.filterTagMessage}>Products tagged with: "{tag}"</h2>
                 <section className={styles.container}>
-                    {/* Map over the fetched products */}
                     {products.length > 0 ? (
                         products.map((product, index) => (
-                            <Link to={`/ProductPage/${product.email}`} className={styles.detailsLink} key={product.email}>
-                                <div className={styles.content}>
+                            <div key={product.email} className={styles.content}>
+                                <Link to={`/ProductPage/${product.email}`} className={styles.detailsLink}>
                                     <div className={styles.logo}>
-                                        <img src={index % 2 === 0 ? pfp2 : pfp} alt="Product" className={styles.aboutImage} />
+                                        <img 
+                                            src={product.images && product.images.length > 0 
+                                                ? `http://localhost:3001${product.images[0]}` 
+                                                : pfp2} 
+                                            alt="Product" 
+                                            className={styles.aboutImage} 
+                                        />
                                     </div>
                                     <div className={styles.specification}>
                                         <ul className={styles.aboutItems}>
@@ -49,8 +54,8 @@ function ProductsByTag() {
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
-                            </Link>
+                                </Link>
+                            </div>
                         ))
                     ) : (
                         <p className={styles.noResults}>

@@ -17,7 +17,7 @@ const InvestorsByTag = () => {
                 if (data.status === "Success") {
                     setInvestors(data.investors);
 
-                    // Fetch profile pics for each investor (Same logic as Investor.jsx)
+                    // Fetch profile pics for each investor
                     data.investors.forEach((profile) => {
                         axios.get(`http://localhost:3001/profile/photo/${profile.email}`)
                             .then((res) => {
@@ -43,16 +43,11 @@ const InvestorsByTag = () => {
         <div className={styles.Body}>
             <div>
                 <h2 className={styles.filterTagMessage}>Investors with tag: "{tagName}"</h2>
-                {investors.length > 0 ? (
-                    <section className={styles.container}>
-                        {investors.map((profile) => (
-                            <Link 
-                                to={`/InvestorPage/${profile.email}`} 
-                                className={styles.detailsLink} 
-                                key={profile.email}
-                            >
-                                <div className={styles.content}>
-                                    {/* Use fetched profile pic, else fallback to default */}
+                <section className={styles.container}>
+                    {investors.length > 0 ? (
+                        investors.map((profile) => (
+                            <div key={profile.email} className={styles.content}>
+                                <Link to={`/InvestorPage/${profile.email}`} className={styles.detailsLink}>
                                     <img 
                                         src={profilePics[profile.email] || myImage} 
                                         alt="Profile" 
@@ -66,23 +61,41 @@ const InvestorsByTag = () => {
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
-                            </Link>
-                        ))}
-                    </section>
-                ) : (
-                    <p className={styles.noInvestors}>No investors match the tag "{tagName}".</p>
-                )}
+                                </Link>
+                            </div>
+                        ))
+                    ) : (
+                        <p className={styles.noResults}>
+                            No investors match the tag "<b>{tagName}</b>"
+                        </p>
+                    )}
+                </section>
             </div>
 
-            {/* Trending Products Section (Kept Same as Investor.jsx) */}
+            {/* Trending Products Section */}
             <div className={styles.profile}>
                 <h3>Trending Products</h3>
                 <ul className={styles.aboutItems}>
-                    <li className={styles.aboutItem1}><div className={styles.aboutItemText}>EpicTopia AI - personal pursuit manager to plan</div></li>
-                    <li className={styles.aboutItem1}><div className={styles.aboutItemText}>Jasper - Create SEO-optimized content in minutes with AI</div></li>
-                    <li className={styles.aboutItem1}><div className={styles.aboutItemText}>Mandrake - Send Automated Twitter DMs</div></li>
-                    <li className={styles.aboutItem1}><div className={styles.aboutItemText}>Boardy - Get warm intros to investors, customers, and collaborators</div></li>
+                    <li className={styles.aboutItem1}>
+                        <div className={styles.aboutItemText}>
+                            EpicTopia AI - personal pursuit manager to plan
+                        </div>
+                    </li>
+                    <li className={styles.aboutItem1}>
+                        <div className={styles.aboutItemText}>
+                            Jasper - Create SEO-optimized content in minutes with AI
+                        </div>
+                    </li>
+                    <li className={styles.aboutItem1}>
+                        <div className={styles.aboutItemText}>
+                            Mandrake - Send Automated Twitter DMs
+                        </div>
+                    </li>
+                    <li className={styles.aboutItem1}>
+                        <div className={styles.aboutItemText}>
+                            Boardy - Get warm intros to investors, customers, and collaborators
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

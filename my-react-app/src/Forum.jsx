@@ -11,6 +11,7 @@ const PostsPage = ({ useremail, username }) => {
   const [view, setView] = useState("all"); // "all", "myposts", "mycomments", "myupvotes"
   const [userProfiles, setUserProfiles] = useState({}); // Store user profiles with their types and photos
   const [selectedPostImage, setSelectedPostImage] = useState(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +25,31 @@ const PostsPage = ({ useremail, username }) => {
       fetchMyUpvotes();
     }
   }, [view]);
+
+  // Show/hide scroll to top button based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  
+  // Function to scroll to top smoothly
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const fetchUserProfile = async (email) => {
     try {
@@ -276,9 +302,8 @@ const PostsPage = ({ useremail, username }) => {
               </div>
             </div>
 
-            <h3><strong>{post.title}</strong></h3>
-            <br />
-            <p>{post.content}</p>
+            <h3 className={styles.postTitle}>{post.title}</h3>
+            <p className={styles.postContent}>{post.content}</p>
 
             <div className={styles.imageGrid}>
               {post.image &&
@@ -294,7 +319,8 @@ const PostsPage = ({ useremail, username }) => {
             </div>
 
             <p>Upvotes: {post.upvotes}</p>
-            <button onClick={() => handleUpvote(post._id)}>Upvote</button>
+            <br />
+            <button onClick={() => handleUpvote(post._id)} className={styles.upvoteButton}>Upvote</button>
 
             {view === "myposts" && (
               <button onClick={() => deletePost(post._id)} className={styles.CommentsButton}>
@@ -376,6 +402,19 @@ const PostsPage = ({ useremail, username }) => {
             </button>
           </div>
         </div>
+      )}
+
+      {/* Scroll to top button */}
+      {showScrollTop && (
+        <button 
+          className={styles.scrollTopButton}
+          onClick={scrollToTop}
+          aria-label="Scroll to top"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 19V5M12 5L5 12M12 5L19 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
       )}
     </div>
   );

@@ -4,16 +4,30 @@ import styles from "./VirtualAssets.module.css"; // Import CSS for styling
 
 const VirtualAssets = () => {
     const [assets, setAssets] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios.get("http://localhost:3001/api/virtual-assets")
             .then((response) => {
                 setAssets(response.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.error("Error fetching virtual assets:", error);
+                setLoading(false);
             });
     }, []);
+
+    if (loading) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.noAssets}>
+                    <div className={styles.loadingSpinner}></div>
+                    <p>Loading virtual assets...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>
@@ -26,12 +40,14 @@ const VirtualAssets = () => {
                             </div>
                             <div className={styles.details}>
                                 <h2>{asset.TokenName}</h2>
-                                <p><strong>Price:</strong> {asset.CurrentPrice ? asset.CurrentPrice : "--"}</p>
+                                <p><strong>Price:</strong> <span className={styles.price}>₹{asset.CurrentPrice ? asset.CurrentPrice : "--"}</span></p>
                             </div>
                         </div>
                     ))
                 ) : (
-                    <p>No Virtual Assets Found</p>
+                    <div className={styles.noAssets}>
+                        <p>No Virtual Assets Found</p>
+                    </div>
                 )}
             </div>
         </div>

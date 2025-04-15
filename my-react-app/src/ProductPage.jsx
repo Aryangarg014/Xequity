@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Hero } from "./Prdcomponents/prdHero/Hero";
 import axios from "axios";
-import { useLocation } from "react-router-dom"; // Import useLocation
+import "./ProductPage.module.css";
+
 const ProductPage = () => {
   const { email } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const location = useLocation();
-  const loggedInEmail = location.state?.loggedInEmail || ""; // Get logged-in email from state
+  const loggedInEmail = location.state?.loggedInEmail || "";
 
-  {console.log(email)}
-  // Fetch product details (optional)
+  // Fetch product details
   useEffect(() => {
     axios
       .get(`http://localhost:3001/product/${email}`)
@@ -31,13 +31,23 @@ const ProductPage = () => {
   }, [email]);
 
   return (
-    <div>
+    <div className="product-page">
       {loading ? (
-        <p>Loading product...</p>
+        <div className="loading-container">
+          <div className="spinner"></div>
+          <p>Loading product...</p>
+        </div>
       ) : error ? (
-        <p style={{ color: "red" }}>{error}</p>
+        <div className="error-container">
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>Try Again</button>
+        </div>
       ) : (
-        <Hero product={Array.isArray(product) ? product : [product]} email={email}   loggedInEmail={loggedInEmail} />
+        <Hero 
+          product={Array.isArray(product) ? product : [product]} 
+          email={email} 
+          loggedInEmail={loggedInEmail} 
+        />
       )}
     </div>
   );

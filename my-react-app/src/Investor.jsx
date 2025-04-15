@@ -48,16 +48,12 @@ function Investor() {
                 <section className={styles.container}>
                     {profiles.length > 0 ? (
                         profiles.map((profile) => (
-                            <Link
-                                to={`/InvestorPage/${profile.email}`} // Passing email in the URL
-                                className={styles.detailsLink}
-                                key={profile.email}
-                            >
-                                <div className={styles.content}>
+                            <div key={profile.email} className={styles.content}>
+                                <Link to={`/InvestorPage/${profile.email}`} className={styles.detailsLink}>
                                     <img
-                                        src={profilePics[profile.email] || myImage}
-                                        alt="Profile"
-                                        className={styles.aboutImage}
+                                        src={profilePics[profile.email] || myImage} 
+                                        alt="Profile" 
+                                        className={styles.aboutImage} 
                                     />
                                     <ul className={styles.aboutItems}>
                                         <li className={styles.aboutItem}>
@@ -67,8 +63,8 @@ function Investor() {
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
-                            </Link>
+                                </Link>
+                            </div>
                         ))
                     ) : (
                         <p className={styles.noResults}>

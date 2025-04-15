@@ -1,11 +1,19 @@
 :root {
     /* Colours */
-    --color-text: #fff;
-    --color-primary: #576cbc;
-    --color-secondary: #19376d;
-    --color-dark: #0b2447;
-    --color-bg: #04152d;
-    /* --color-bg: #04152d; */
+    --color-text: #2d3748;
+    --color-primary: #0a66c2;
+    --color-primary-rgb: 10, 102, 194;
+    --color-secondary: #057642;
+    --color-secondary-rgb: 5, 118, 66;
+    --color-accent: #ec9d15;
+    --color-accent-rgb: 236, 157, 21;
+    --color-dark: #1a202c;
+    --color-bg: #f3f2ef;
+    --color-bg-card: #faf9f6;
+    --color-bg-container: #f6f5f1;
+    --color-border: #e0e0e0;
+    --color-shadow: rgba(0, 0, 0, 0.08);
+    --gradient-primary: linear-gradient(135deg, #0a66c2 0%, #0077b5 100%);
 
     /* Fonts */
     --font-roboto: "sans-serif";
