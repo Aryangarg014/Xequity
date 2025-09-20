@@ -1,0 +1,82 @@
+Trending Sidebar .profile {
+  position: fixed;
+  top: 100px;
+  right: 40px;
+  width: 260px;
+  padding: 30px;
+  background-color: rgba(12, 12, 12, 0.863);
+  border: 2px solid black;
+  border-radius: 15px;
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+
+.profile h3 {
+  color: rgb(192, 43, 226);
+  text-decoration: underline;
+  text-decoration-color: rgb(103, 184, 255);
+  text-underline-offset: 6px;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+/* Scrollable wrapper */
+.aboutItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.aboutItems::-webkit-scrollbar {
+  width: 6px;
+}
+
+.aboutItems::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+/* Trending Item */
+.trendingItem {
+  display: flex;
+  width: 20px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background-color: #1b1b1bdc;
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.trendingItem:hover {
+  background-color: #2a2a2a;
+}
+
+.trendingImage {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #ffffff30;
+}
+
+.trendingItem h4 {
+  font-size: 14px;
+  margin: 0;
+  color: #ffd700;
+}
+
+.trendingItem p {
+  font-size: 12px;
+  margin: 2px 0 0;
+  color: #bbbbbb;
+}
+
+.detailsLink {
+  text-decoration: none;
+  color: inherit;
+}

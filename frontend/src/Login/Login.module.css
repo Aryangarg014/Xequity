@@ -1,0 +1,147 @@
+.container {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 2rem 2.25rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: auto;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0a2540;
+}
+
+.underline {
+    width: 50px;
+    height: 3px;
+    background: #0a66c2;
+    border-radius: 2px;
+    margin: 0.4rem auto 0;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.input {
+    display: flex;
+    align-items: center;
+    background: #f7f9fc;
+    padding: 0.6rem 0.9rem;
+    border-radius: 6px;
+    border: 1px solid #d0d7de;
+}
+
+.input input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.95rem;
+    width: 100%;
+    color: #333;
+}
+
+.iccon {
+    width: 18px;
+    height: 18px;
+    margin-right: 0.5rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 0.92rem;
+    color: #333;
+    margin-top: 0.2rem;
+    gap: 0.5rem;
+}
+
+.forgot {
+    color: #0a66c2;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    text-align: right;
+    transition: color 0.15s ease;
+}
+
+.forgot:hover {
+    color: #00356b;
+    text-decoration: underline;
+}
+
+.submit_container {
+    margin-top: 1.75rem;
+    width: 100%;
+}
+
+.submit {
+    background-color: #0a66c2;
+    color: #ffffff;
+    text-align: center;
+    padding: 0.65rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.15s ease;
+}
+
+.submit:hover,
+.submit:focus {
+    background-color: #004182;
+}
+
+.redirectText {
+    margin-top: 1.4rem;
+    font-size: 0.92rem;
+    color: #555;
+    text-align: center;
+}
+
+.redirectLink {
+    color: #0a66c2;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.redirectLink:hover {
+    color: #00356b;
+    text-decoration: underline;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 480px) {
+    .container {
+        padding: 1.5rem 1.2rem;
+    }
+
+    .text {
+        font-size: 1.3rem;
+    }
+
+    .input {
+        padding: 0.55rem 0.75rem;
+    }
+
+    .submit {
+        font-size: 0.95rem;
+    }
+}

@@ -1,0 +1,186 @@
+/* ProductPage.module.css */
+
+
+.pageContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    background-color: #f4f6f8;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #1f1f1f;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.sectionWrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+.statusMessage {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 50px;
+    color: #666;
+}
+
+
+.statusError {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 50px;
+    color: red;
+}
+
+
+.gainEquityContainer {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+
+.gainEquityButton {
+    background-color: #0073b1;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.gainEquityButton:hover {
+    background-color: #005f90;
+}
+
+
+.chartContainer {
+    width: 100%;
+    margin: 40px 0;
+    padding: 24px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.chartTitle {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+
+
+.teamSection {
+    width: 100%;
+    margin: 40px 0;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.teamTitle {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+
+.teamGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 0 10px;
+}
+
+
+.teamCard {
+    background-color: #f3f6f8;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+
+.teamCard:hover {
+    transform: translateY(-5px);
+}
+
+
+.avatarPlaceholder {
+    width: 60px;
+    height: 60px;
+    background-color: #0073b1;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 60px;
+    border-radius: 50%;
+    margin: 0 auto 12px auto;
+}
+
+
+.memberName {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f1f1f;
+}
+
+
+.memberRole {
+    font-size: 14px;
+    color: #555;
+}
+
+
+
+
+
+
+
+
+.customSection {
+    width: 100%;
+    margin: 40px 0;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.sectionCard {
+    margin-bottom: 20px;
+    padding: 16px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+
+.sectionCard h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+
+.sectionCard p {
+    font-size: 15px;
+    color: #555;
+}

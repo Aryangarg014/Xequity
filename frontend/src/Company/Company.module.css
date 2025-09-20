@@ -1,0 +1,154 @@
+/* General container styling */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f3f6f9;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Right panel */
+.rightPanel {
+    width: 90%;
+    max-width: 900px;
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e0e0;
+}
+
+.rightPanel h2 {
+    text-align: center;
+    font-size: 28px;  /* Increased from 24px */
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+/* Product List */
+.productList {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Product Card */
+.productCard {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.productCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Image */
+.productImage {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 2px solid #0073b1;
+}
+
+/* Product Text */
+.productCard h3 {
+    font-size: 22px;  /* Increased from 20px */
+    font-weight: 600;
+    color: #0073b1;
+    margin-bottom: 10px;
+}
+
+.productCard p {
+    font-size: 16px;  /* Increased from 15px */
+    text-align: center;
+    color: #555;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.productCard strong {
+    color: #333;
+}
+
+/* Button Group */
+.buttonGroup {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+/* Shared Button Style */
+.buttonGroup button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;  /* Increased from 14px */
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* Specific Buttons */
+.viewButton {
+    background-color: #0073b1;
+    color: white;
+}
+
+.viewButton:hover {
+    background-color: #005f91;
+}
+
+.updateButton {
+    background-color: #28a745;
+    color: white;
+}
+
+.updateButton:hover {
+    background-color: #218838;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+    color: white;
+}
+
+.deleteButton:hover {
+    background-color: #c82333;
+}
+
+/* Add Product Button */
+.addButton {
+    margin-top: 15px;
+    padding: 12px 24px;
+    background-color: #ff9800;
+    color: white;
+    font-size: 18px;  /* Increased from 16px */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.addButton:hover {
+    background-color: #e68900;
+}
+
+/* Error Text */
+.error {
+    color: #d32f2f;
+    text-align: center;
+    margin: 20px 0;
+}

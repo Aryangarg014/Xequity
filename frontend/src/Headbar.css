@@ -1,0 +1,323 @@
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 15px 7%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Hamburger icon */
+.hamburger-icon {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 20px;
+    cursor: pointer;
+    margin-left: 5px;
+    color: red;
+}
+
+.hamburger-icon .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #3010a4;
+    margin: 3px 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger-icon .bar.open:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.hamburger-icon .bar.open:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-icon .bar.open:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Responsive dropdown menu */
+.lists {
+    display: flex;
+    gap: 20px;
+}
+
+.lists li {
+    display: inline-block;
+    margin: 10px 20px;
+    font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+    .hamburger-icon {
+        display: flex;
+    }
+
+    .lists {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 7%;
+        background: #fff;
+        width: 70%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .lists.open {
+        display: flex;
+    }
+
+    .lists li {
+        margin: 10px 0;
+    }
+
+    .lists li a {
+        text-align: left;
+        font-size: 16px;
+    }
+}
+
+/* User status styling */
+.user_status {
+    margin-right: 5px;
+    padding: 5px 10px;
+    border-radius: 12px;
+    background: transparent;
+    color: #130761;
+    transition: all 0.3s ease;
+}
+
+.user_status.logged-in {
+    background: #11056b;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Logo and toggle icon */
+.logo {
+    height: 60px;
+    cursor: pointer;
+}
+
+.toggle-icon {
+    height: 60px;
+    cursor: pointer;
+    margin-left: 40px;
+}
+
+/* Search box styling */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #242424;
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.search-box input {
+    padding: 6px;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color: #fff;
+    font-size: 18px;
+}
+
+.search-box input::placeholder {
+    color: #fff;
+}
+
+.search-box img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Highlight the active link */
+.active-link {
+    color: #ff4500;
+    font-weight: bold;
+    border-bottom: 2px solid #ff4500;
+    text-decoration: none;
+}
+
+.lists li a {
+    color: #000;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+.lists li a:hover {
+    color: #007bff;
+}
+
+/* Dropdown div styles */
+.dropdown-div {
+    position: absolute;
+    top: 70px;
+    right: 7%;
+    width: 250px;
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    z-index: 1001;
+    overflow: hidden; /* Ensures child elements conform to border-radius */
+}
+
+
+/* --- IMPROVED STYLES START HERE --- */
+
+/* Container for the dropdown content */
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    background: #f8f9fa; /* A very light gray background for the content area */
+}
+
+/* Style for "Welcome" heading */
+.content h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #343a40;
+    text-align: center;
+    margin: 0 0 16px 0;
+}
+
+/* Style for the main profile navigation buttons (outline style) */
+.profile-btn {
+    background-color: #fff;
+    color: #0d6efd;
+    border: 2px solid #0d6efd;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.profile-btn:hover {
+    background-color: #0d6efd;
+    color: #fff;
+    transform: translateY(-2px); /* Add a slight lift effect */
+}
+
+/* Style for the final action button (Login/Logout) */
+.logout-btn {
+    background: #dc3545; /* A standard 'danger' or 'action' red */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px; /* Slightly more padding to show prominence */
+    margin-top: 6px; /* Space above the final button */
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: #c82333; /* Darker red on hover */
+    transform: translateY(-2px);
+}
+
+
+/* --- IMPROVED STYLES END HERE --- */
+
+
+/* Fallback/other styles from original file */
+.close-btn {
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 14px;
+}
+
+.close-btn:hover {
+    background: #d13a00;
+}
+
+.aboutImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+    border: 2px solid #11056b;
+}
+
+.aboutItems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.aboutItem {
+    margin: 10px 0;
+}
+
+.aboutItemText h3 {
+    color: #11056b;
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.aboutItemText p {
+    color: #333;
+    font-size: 14px;
+    margin: 3px 0;
+}
+
+.email-link{
+    text-decoration: none;
+    color: #1e1b1b;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        width: 100%;
+    }
+
+    .aboutImage {
+        width: 60px;
+        height: 60px;
+    }
+
+    .aboutItemText h3 {
+        font-size: 14px;
+    }
+
+    .aboutItemText p {
+        font-size: 12px;
+    }
+}

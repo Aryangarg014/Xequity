@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fund Me WebApp</title>
+</head>
+
+<body>
+    <h1>What's good : )</h1>
+
+    <script src="./index.js" type="module"></script>
+
+    <p>Connected Account: <span id="accountAddress">Not Connected</span></p>
+    <p>Contract Address: <span id="contractAddress"></span></p>
+
+    <button id="connectButton"> Connect </button>
+    <button id="fundButton">Fund</button>
+    <button id="balanceButton">Get Balance</button>
+    <button id="withdrawButton">Withdraw</button>
+
+    <br><br>
+
+    <label for="ethAmount">ETH Amount:</label>
+    <input id="ethAmount" placeholder="0.1" />
+
+    <br><br>
+
+    <label for="recipientSelect">Select Recipient:</label>
+    <select id="recipientSelect">
+        <!-- Options will be dynamically inserted here -->
+    </select>
+
+</body>
+
+</html>

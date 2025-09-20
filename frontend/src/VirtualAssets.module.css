@@ -1,0 +1,253 @@
+/* LinkedIn-style Virtual Assets Page */
+
+.virtualAssetsPage {
+  min-height: 100vh;
+  background: #f3f6f8;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif;
+}
+
+/* Top Navigation Bar */
+.topnav {
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 2rem;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0a66c2;
+  letter-spacing: 1px;
+}
+
+.navlinks {
+  display: flex;
+  gap: 2rem;
+}
+
+.navlink {
+  color: #434649;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.2s;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+}
+
+.navlink:hover,
+.navlink:focus {
+  color: #0a66c2;
+  border-bottom: 2px solid #0a66c2;
+}
+
+/* Main Content */
+.mainContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+}
+
+.pageHeader {
+  margin-bottom: 2.5rem;
+  text-align: left;
+}
+
+.pageTitle {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 0.25rem;
+}
+
+.pageSubtitle {
+  color: #666;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Responsive Grid for Asset Cards */
+.assetsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+/* Asset Card Styles */
+.assetCard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  outline: none;
+  border: 1px solid #e6e9ec;
+  padding: 0;
+}
+
+.assetCard:hover,
+.assetCard:focus {
+  box-shadow: 0 4px 20px rgba(10, 102, 194, 0.13);
+  border-color: #0a66c2;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.assetImageContainer {
+  width: 100%;
+  height: 180px;
+  background: #f4f6fa;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.assetImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+
+.assetCard:hover .assetImage {
+  transform: scale(1.04);
+}
+
+.assetContent {
+  padding: 1.25rem 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.assetInfo {
+  margin-bottom: 0.25rem;
+}
+
+.assetName {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.assetPriceSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.priceLabel {
+  color: #888;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.priceValue {
+  color: #0a66c2;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Empty State */
+.emptyState {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 4rem 0 2rem 0;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  color: #c7c7c7;
+  margin-bottom: 0.5rem;
+}
+
+.emptyTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 0.25rem;
+}
+
+.emptyDescription {
+  color: #666;
+  font-size: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 900px) {
+  .mainContent {
+    padding: 2rem 0.5rem 1.5rem 0.5rem;
+  }
+
+  .assetsGrid {
+    gap: 1.2rem;
+  }
+
+  .assetContent {
+    padding: 1rem 1rem 1.2rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .topnav {
+    flex-direction: column;
+    height: auto;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .navlinks {
+    gap: 1rem;
+  }
+
+  .mainContent {
+    padding: 1rem 0.2rem 1rem 0.2rem;
+  }
+
+  .pageHeader {
+    margin-bottom: 1.2rem;
+  }
+
+  .pageTitle {
+    font-size: 1.3rem;
+  }
+
+  .assetsGrid {
+    gap: 0.7rem;
+  }
+
+  .assetImageContainer {
+    height: 120px;
+  }
+
+  .assetContent {
+    padding: 0.7rem 0.7rem 1rem 0.7rem;
+    gap: 0.7rem;
+  }
+}

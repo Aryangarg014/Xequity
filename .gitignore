@@ -1,3 +1,27 @@
+"node_modules/" 
+"node_modules/" 
+"node_modules/" 
+node_modules
+.env
+
+# Hardhat files
+/cache
+/artifacts
+
+# TypeChain files
+/typechain
+/typechain-types
+deployments
+# solidity-coverage files
+/coverage
+/coverage.json
+
+# Hardhat Ignition default folder for deployments against a local node
+ignition/deployments/chain-31337
+
+
+# Outside of folder my react app and server
+.gitignore
 # Dependencies
 node_modules/
 
@@ -27,7 +51,7 @@ pnpm-debug.log*
 .idea
 .DS_Store
 *.suo
-*.ntvs*
+.ntvs
 *.njsproj
 *.sln
 *.sw?

@@ -1,3 +1,4 @@
+// server\config\emailConfig.js
 const nodemailer = require('nodemailer');
 const path = require('path');
 const fs = require('fs');
@@ -18,7 +19,7 @@ const transporter = nodemailer.createTransport({
 const sendOTP = async (email, otp) => {
     try {
         // Read the logo file
-        const logoPath = path.join(__dirname, '../../my-react-app/src/assets/complete_logo.png');
+        const logoPath = path.join(__dirname, '../../frontend/src/assets/complete_logo.png');
 
         // Add error handling for file reading
         if (!fs.existsSync(logoPath)) {

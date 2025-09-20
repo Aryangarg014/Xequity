@@ -1,0 +1,122 @@
+/* LinkedIn-style Trending Sidebar */
+
+.profile {
+  position: sticky;
+  top: 90px;
+  width: 350px;
+  min-width: 300px;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  border: 1px solid #e6e9ec;
+  color: #222;
+  text-align: left;
+  z-index: 2;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  height: fit-content;
+  flex-shrink: 0;
+}
+
+.profile h3 {
+  color: #0a66c2;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+.aboutItems {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.aboutItems::-webkit-scrollbar {
+  width: 6px;
+}
+
+.aboutItems::-webkit-scrollbar-thumb {
+  background-color: #e6e9ec;
+  border-radius: 4px;
+}
+
+.trendingItem {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-width: 260px;
+  padding: 0.75rem 0.65rem;
+  background: #f4f6fa;
+  border-radius: 8px;
+  border: 1px solid #e6e9ec;
+  transition: box-shadow 0.18s, border-color 0.18s, background 0.18s;
+  cursor: pointer;
+}
+
+.trendingItem:hover {
+  background: #eaf3fb;
+  border-color: #0a66c2;
+  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.10);
+}
+
+.trendingImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #e6e9ec;
+  background: #fff;
+}
+
+.trendingItem h4 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: #222;
+  font-weight: 600;
+}
+
+.trendingItem p {
+  font-size: 1rem;
+  margin: 2px 0 0;
+  color: #0a66c2;
+  font-weight: 500;
+}
+
+.detailsLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (max-width: 900px) {
+  .profile {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    margin: 1.5rem 0 0 0;
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile {
+    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+  }
+
+  .trendingImage {
+    width: 28px;
+    height: 28px;
+  }
+
+  .trendingItem h4 {
+    font-size: 1rem;
+  }
+
+  .trendingItem p {
+    font-size: 0.9rem;
+  }
+}

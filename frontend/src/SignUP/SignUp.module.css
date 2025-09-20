@@ -1,0 +1,330 @@
+.container {
+  width: 100%;
+  max-width: 480px;
+  background: #ffffff;
+  padding: 2.25rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.text {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0a2540;
+}
+
+.underline {
+  width: 60px;
+  height: 3px;
+  background: #0a66c2;
+  margin: 0.4rem auto 0;
+  border-radius: 2px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  background: #f3f6f8;
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #e0e6ea;
+  gap: 0.75rem;
+}
+
+.input input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.95rem;
+  width: 100%;
+  color: #333;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.otpButton {
+  background-color: #0a66c2;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.otpButton:hover {
+  background-color: #004182;
+}
+
+.otpInput {
+  font-size: 0.95rem;
+}
+
+.verificationRequired {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signupForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.checkboxContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+}
+
+.fileUpload {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.fileUpload input {
+  padding: 0.3rem 0;
+}
+
+.errorContainer {
+  margin-top: 0.5rem;
+}
+
+.errorMessage {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin: 0.3rem 0;
+}
+
+.submit_container {
+  margin-top: 1.75rem;
+  width: 100%;
+}
+
+.submit {
+  background-color: #0a66c2;
+  color: #ffffff;
+  text-align: center;
+  padding: 0.65rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.submit:hover,
+.submit:focus {
+  background-color: #004182;
+}
+
+.redirectText {
+  margin-top: 1.2rem;
+  font-size: 0.92rem;
+  color: #555;
+  text-align: center;
+}
+
+.redirectLink {
+  color: #0a66c2;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.redirectLink:hover {
+  color: #00356b;
+  text-decoration: underline;
+}
+
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.modalContent h2 {
+  font-size: 1.3rem;
+  color: #0a2540;
+  margin-bottom: 1rem;
+}
+
+.modalContent p {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.modalContent ul {
+  list-style-type: disc;
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.modalContent a {
+  color: #0a66c2;
+  text-decoration: none;
+}
+
+.modalContent a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .text {
+    font-size: 1.4rem;
+  }
+
+  .input {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .submit {
+    font-size: 0.95rem;
+  }
+}
+.input img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+.pageBackground {
+  background-color: #f3f6f8; /* Light LinkedIn-style gray */
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #000;
+}
+
+.loadingSpinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.popupMessage {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.popupMessage button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.popupBox {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 400px;
+    width: 80%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}

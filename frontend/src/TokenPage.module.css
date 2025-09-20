@@ -1,0 +1,586 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    min-height: 100vh;
+    background: #f8f9fa;
+}
+
+
+.mainLayout {
+    display: grid;
+    grid-template-columns: 300px 1fr 300px;
+    gap: 30px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+
+.tokenamestyle {
+    color: #333;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+
+.detailsLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+
+.detailsLink:hover {
+    transform: translateY(-2px);
+}
+
+
+.header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+}
+
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 20px;
+    background: linear-gradient(to right, #e6f0ff, #ffffff);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    width: 100%;
+    margin: 0;
+}
+
+
+.content:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+.logo {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.aboutImage {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.specification {
+    flex: 1;
+    margin-left: 20px;
+}
+
+
+.aboutItems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #1f1f1f;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.aboutItem {
+    margin: 0;
+}
+
+
+.aboutItemText h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #0a66c2;
+}
+
+
+.aboutItemText p {
+    margin: 8px 0;
+    line-height: 1.6;
+    color: #333;
+    font-size: 16px;
+}
+
+
+.tokenImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.tokenInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+}
+
+
+.price {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #007bff;
+    margin: 10px 0 0 0;
+}
+
+
+.overview {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    margin-bottom: 30px;
+}
+
+
+.overview h2 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+
+.overview p {
+    margin: 12px 0;
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+
+/* Trading Sidebar Styles */
+.tradingSidebar {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.tradingSidebar h2 {
+    color: #333;
+    margin: 0 0 20px 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+.tradingActions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+
+.buyBtn,
+.sellBtn {
+    flex: 1;
+    padding: 15px 10px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+
+.buyBtn {
+    background: #28a745;
+    color: white;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+
+.buyBtn:hover {
+    background: #22893a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+
+.sellBtn {
+    background: rgb(248, 11, 11);
+    color: white;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+
+.sellBtn:hover {
+    background: rgb(216, 5, 5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+
+.tradingFormGroup {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+
+.tradingFormGroup label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+    font-size: 1rem;
+}
+
+
+.tradingFormGroup input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: white;
+    color: #333;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+
+.tradingFormGroup input:focus {
+    outline: none;
+    border-color: #007bff;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+
+.tradingFormGroup input::placeholder {
+    color: #6c757d;
+}
+
+
+.orderSummary {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #e9ecef;
+    width: 100%;
+}
+
+
+.orderSummaryItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1rem;
+}
+
+
+.orderTotal {
+    font-weight: 600;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #e9ecef;
+    color: #007bff;
+    font-size: 1.1rem;
+}
+
+
+/* Main Content Styles */
+.mainContent {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+}
+
+
+/* User Bids Sidebar Styles */
+.userBidsSidebar {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.userBidsSidebar h2 {
+    color: #333;
+    margin: 0 0 25px 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+.bidsSection {
+    margin-bottom: 25px;
+}
+
+
+.bidsSection h3 {
+    color: #333;
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 8px;
+}
+
+
+.ticketItem {
+    background: #f8f9fa;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+}
+
+
+.ticketItem:hover {
+    background: #e9ecef;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+.ticketInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.ticketPrice {
+    color: #28a745;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+
+.ticketQuantity {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+
+.cancelBtn {
+    background: rgb(248, 11, 11);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+
+.cancelBtn:hover {
+    background: rgb(216, 5, 5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+
+.noTickets {
+    color: #6c757d;
+    text-align: center;
+    font-style: italic;
+    margin: 15px 0;
+}
+
+
+/* Loading Container */
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .mainLayout {
+        grid-template-columns: 280px 1fr 280px;
+        gap: 20px;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .mainLayout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+   
+    .tradingSidebar,
+    .userBidsSidebar {
+        position: static;
+        order: 2;
+    }
+   
+    .mainContent {
+        order: 1;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+   
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+   
+    .tokenamestyle {
+        font-size: 2rem;
+    }
+   
+    .content {
+        flex-direction: column;
+        text-align: center;
+    }
+   
+    .logo {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+   
+    .specification {
+        margin-left: 0;
+    }
+   
+    .tradingActions {
+        flex-direction: column;
+    }
+   
+    .buyBtn,
+    .sellBtn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+.bidsSection {
+    width: 100%;
+    max-width: 800px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+
+.bidsContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+.bidsColumn {
+    flex: 1;
+}
+
+
+.bidsColumn h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+
+.bidsHeader {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+
+.bidRow {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+}
+
+
+
+
+
+.sellPrice {
+    color: #dc3545;
+    /* Red for sell prices */
+}
+
+
+.buyPrice {
+    color: #28a745;
+    /* Green for buy prices */
+}

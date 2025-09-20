@@ -1,0 +1,468 @@
+@import "./vars.css";
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    margin: 2rem auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: fadeIn 0.6s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-primary), rgb(2, 107, 46));
+}
+
+.container:hover {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+}
+
+h2 {
+    text-align: center;
+    color: var(--color-primary);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+.input,
+.textarea {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 10px 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background-color: white;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.input:focus,
+.textarea:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.5;
+    background-image: linear-gradient(to bottom, transparent, transparent 24px, rgba(0, 0, 0, 0.05) 24px, rgba(0, 0, 0, 0.05) 25px);
+    background-size: 100% 25px;
+    line-height: 25px;
+    padding-top: 16px;
+}
+
+.fileSection {
+    margin: 20px 0;
+    position: relative;
+    
+}
+
+/* Custom file input styling */
+.fileInputWrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+}
+
+.fileInput {
+    position: absolute;
+    font-size: 100px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.fileInputLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    background-color: rgba(10, 102, 194, 0.05);
+    border: 2px dashed var(--color-primary);
+    border-radius: 8px;
+    color: var(--color-primary);
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    gap: 8px;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.fileInputLabel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        rgba(10, 102, 194, 0.05) 0%, 
+        rgba(10, 102, 194, 0.1) 50%, 
+        rgba(10, 102, 194, 0.05) 100%);
+    transition: left 0.6s ease;
+    z-index: -1;
+}
+
+.fileInputLabel:hover {
+    background-color: rgba(10, 102, 194, 0.08);
+    border-color: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.fileInputLabel:hover::before {
+    left: 100%;
+}
+
+.selectedFiles {
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+    /* Scrollbar styling */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(10, 102, 194, 0.3) transparent;
+}
+
+.selectedFiles::-webkit-scrollbar {
+    width: 6px;
+}
+
+.selectedFiles::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.selectedFiles::-webkit-scrollbar-thumb {
+    background-color: rgba(10, 102, 194, 0.3);
+    border-radius: 6px;
+}
+
+.fileItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8f9fa;
+    padding: 12px 16px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.fileItem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--color-primary), rgb(2, 107, 46));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fileItem:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-primary);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.fileItem:hover::before {
+    opacity: 1;
+}
+
+.fileName {
+    font-size: 14px;
+    color: #495057;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+    cursor: pointer;
+    position: relative;
+    padding-left: 28px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.fileName::before {
+    content: '📷';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.fileName:hover {
+    color: var(--color-primary);
+    transform: translateX(3px);
+}
+
+.removeButton {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    border: none;
+    color: #dc3545 !important;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    margin: 0px 10px;
+    line-height: 1;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 50% !important;
+    min-width: 28px !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.removeButton:hover {
+    color: white;
+    background-color: #dc3545;
+    transform: rotate(90deg);
+    box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
+}
+
+.button {
+    width: 100%;
+    padding: 14px 16px;
+    background: linear-gradient(45deg, var(--color-primary), rgb(2, 107, 46));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    margin-top: 15px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(10, 102, 194, 0.2);
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: linear-gradient(
+        90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+    transition: left 0.8s ease;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(10, 102, 194, 0.25);
+}
+
+.button:hover::after {
+    left: 100%;
+}
+
+.button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(10, 102, 194, 0.2);
+}
+
+.button:disabled {
+    background: linear-gradient(45deg, #ccc, #ddd);
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.error {
+    color: #dc3545;
+    text-align: center;
+    margin: 15px 0;
+    padding: 12px 16px;
+    background-color: rgba(220, 53, 69, 0.08);
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+    font-weight: 500;
+    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+    box-shadow: 0 2px 10px rgba(220, 53, 69, 0.15);
+}
+
+.successMessage {
+    color: #28a745;
+    text-align: center;
+    margin: 15px 0;
+    padding: 12px 16px;
+    background-color: rgba(40, 167, 69, 0.08);
+    border-radius: 8px;
+    border-left: 4px solid #28a745;
+    font-weight: 500;
+    animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 2px 10px rgba(40, 167, 69, 0.15);
+}
+
+/* Image popup that properly covers the full page */
+.imagePopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.imagePopupContent {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagePopupContent img {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+.closePopup {
+    position: absolute;
+    top: -50px;
+    right: -90px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.2s ease;
+}
+
+.closePopup:hover {
+    color: #dc3545;
+    background: none;
+}
+
+/* Loading spinner for submission */
+.loadingSpinner {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20%, 60% {
+        transform: translateX(-5px);
+    }
+    40%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+  }
+  
+  /* Input placeholders */
+  .input::placeholder,
+  .textarea::placeholder {
+    color: #adb5bd;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.input:focus::placeholder,
+.textarea:focus::placeholder {
+    color: #ced4da;
+    opacity: 0.5;
+    transform: translateX(5px);
+}
+
+/* Responsive adjustments while keeping main dimensions */
+@media screen and (max-width: 576px) {
+    .container {
+        margin: 1rem;
+        padding: 15px;
+    }
+    
+    .fileName {
+        max-width: 150px;
+    }
+  }

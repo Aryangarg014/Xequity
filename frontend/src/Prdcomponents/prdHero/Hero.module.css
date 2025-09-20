@@ -1,0 +1,284 @@
+/* Hero.module.css - Improved LinkedIn-style Styling */
+
+
+@import "../../vars.css";
+
+
+.all {
+  background-color: #f4f6f8;
+  color: #1f1f1f;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  padding-bottom: 50px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 5%;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+
+.profileCard {
+  width: 100%;
+  position: relative;
+}
+
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+
+.profileImageContainer {
+  flex-shrink: 0;
+}
+
+
+.profileImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 3px solid #ffffff;
+}
+
+
+.profileInfo {
+  flex: 1;
+}
+
+
+.profileInfo .title {
+  margin-bottom: 8px;
+}
+
+
+.profileInfo .email {
+  margin-bottom: 0;
+}
+
+
+.content {
+  flex: 1;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  color: #1f1f1f;
+
+
+  position: relative;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0a66c2;
+}
+
+
+.description {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+
+.email {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 12px;
+}
+
+
+.investor_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+
+.tag {
+  background-color: #e6f0f6;
+  color: #0a66c2;
+  border: 1px solid #cfd9de;
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.tag:hover {
+  background-color: #d0e8f2;
+  border-color: #0a66c2;
+}
+
+
+.contactBtn {
+  background-color: #0a66c2;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: 20px;
+  display: inline-block;
+  transition: background-color 0.3s ease;
+}
+
+
+.contactBtn:hover {
+  background-color: #004182;
+}
+
+
+.imageSlider {
+  margin: 40px auto;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 10px;
+  scroll-behavior: smooth;
+  width: 1200px;
+}
+
+
+.sliderImage {
+  height: 260px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+
+.sliderImage:hover {
+  transform: scale(1.05);
+}
+
+
+.imageSlider::-webkit-scrollbar {
+  height: 8px;
+}
+
+
+.imageSlider::-webkit-scrollbar-thumb {
+  background: #0a66c2;
+  border-radius: 10px;
+}
+
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+
+.buyTokens,
+.gainEquity {
+  background-color: #0a66c2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+.buyTokens:hover,
+.gainEquity:hover {
+  background-color: #004182;
+}
+
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 20px 3%;
+  }
+
+
+  .content {
+    width: 100%;
+    padding: 20px;
+  }
+
+
+  .profileHeader {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+
+  .profileImage {
+    width: 100px;
+    height: 100px;
+  }
+
+
+  .title {
+    font-size: 28px;
+  }
+
+
+  .description {
+    font-size: 16px;
+  }
+
+
+  .imageSlider {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+
+.upvoteContainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.heartIcon {
+  font-size: 20px;
+  transition: transform 0.2s ease;
+}
+
+
+.heartIcon:hover {
+  transform: scale(1.2);
+}

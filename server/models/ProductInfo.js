@@ -6,6 +6,13 @@ const TeamMemberSchema = new mongoose.Schema({
     position: { type: String, required: true },
 });
 
+// Define the Finance schema (revenue, expenses, year)
+const FinanceSchema = new mongoose.Schema({
+    revenue: { type: Number, required: false},
+    expenses: { type: Number, required: false },
+    year: { type: Number, required: false },
+});
+
 // Define the ProductInfo schema
 const ProductInfoSchema = new mongoose.Schema({
     productName: { type: String, required: true },         // Product name
@@ -20,10 +27,25 @@ const ProductInfoSchema = new mongoose.Schema({
             message: "At least one tag is required."
         }
     },  
-    team: { type: [TeamMemberSchema], required: true },    // Array of team members (name and position)
-    images: { type: [String], required: true },            // Array of image URLs for the product
-    email: { type: String, unique: true, required: true },  // Email of the user uploading the product (unique)
-    upvote: { type: Number, default: 0 }                   // Count of upvotes
+    team: { type: [TeamMemberSchema], required: true },    // Array of team members
+    profilePic: { type: String}, // Profile picture for the product
+
+
+    images: { type: [String] },            // Array of image URLs
+    finances: { type: [FinanceSchema], default: [] },      // Array of financial records
+        // ✅ NEW FIELD:
+    customSections: [
+        {
+            title: { type: String, required: true },
+            description: { type: String, required: true }
+        }
+    ],
+    
+    
+    email: { type: String, unique: true, required: true },
+     // Email of uploader
+    upvote: { type: Number, default: 0 },                  // Upvote count
+    createdAt: { type: Date, default: Date.now },          // Creation timestamp
 });
 
 // Create the ProductInfo model

@@ -1,0 +1,464 @@
+/* Body and overall page styling */
+body {
+    background-color: #f3f6f8;
+    font-family: "Segoe UI", "Helvetica Neue", -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Main container - LinkedIn-inspired styling */
+.container {
+    max-width: 1400px;
+    /* Same as Update form */
+    margin: 2rem auto;
+    padding: 3rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    text-align: left;
+    min-height: calc(100vh - 4rem);
+    width: 90%;
+}
+
+/* Main heading */
+.title {
+    color: #000000;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: -0.025em;
+}
+
+.financeList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.financeEntry {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.financeEntry input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+
+.financeButtons {
+    display: flex;
+    gap: 1rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+
+.financeButtons button {
+    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+    background-color: #f0f0f0;
+    border: 1px solid #999;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Section headings */
+h3 {
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #f3f6f8;
+    padding-bottom: 0.5rem;
+}
+
+/* Form styling */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: none;
+}
+
+/* Labels */
+label {
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    display: block;
+}
+
+/* Input and textarea styling */
+input,
+textarea {
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: #0a66c2;
+    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 140px;
+    font-family: inherit;
+}
+
+/* Button styling */
+button {
+    font-family: inherit;
+    font-weight: 600;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.1rem;
+    min-width: 140px;
+    padding: 1rem 1.75rem;
+}
+
+/* Primary submit button */
+button[type="submit"] {
+    background-color: #0a66c2;
+    color: white;
+    margin-top: 1.5rem;
+    align-self: center;
+    min-width: 180px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+button[type="submit"]:hover {
+    background-color: #004182;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(10, 102, 194, 0.3);
+}
+
+/* Action buttons */
+.actionButton {
+    background-color: #f3f6f8;
+    color: #0a66c2;
+    border: 1px solid #e1e5e9;
+    margin-left: 0.5rem;
+    min-width: 120px;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+}
+
+.actionButton:hover {
+    background-color: #e1e5e9;
+    border-color: #0a66c2;
+}
+
+.actionButton.remove {
+    background-color: #fff;
+    color: #d93025;
+    border: 1px solid #d93025;
+    min-width: 100px;
+}
+
+.actionButton.remove:hover {
+    background-color: #d93025;
+    color: white;
+}
+
+/* Tag list container */
+.tagList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+/* Tag input container */
+.tagInputContainer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 0.25rem;
+}
+
+.tagInputContainer input {
+    flex: 1;
+    margin-bottom: 0;
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem;
+}
+
+.tagInputContainer input:focus {
+    box-shadow: none;
+    border-color: transparent;
+}
+
+/* Team list container */
+.teamList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Team member container */
+.teamMemberContainer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    border: 1px solid #dfe3e8;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    position: relative;
+    transition: box-shadow 0.2s ease, border 0.2s ease;
+}
+
+/* Team member container hover effect */
+.teamMemberContainer:hover {
+    border-color: #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.teamMemberContainer input {
+    flex: 1;
+    margin-bottom: 0;
+    background-color: white;
+    border: 1px solid #cbd5e1;
+    padding: 0.75rem 1rem;
+    font-size: 1.05rem;
+    border-radius: 6px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teamMemberContainer input:focus {
+    border-color: #0a66c2;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(10, 102, 194, 0.2);
+}
+
+
+/* Optional: add subtle background on focus */
+.teamMemberContainer:has(input:focus) {
+    background-color: #f0f7ff;
+}
+
+/* Remove button styling inside team member */
+.teamMemberContainer .actionButton.remove {
+    background-color: transparent;
+    color: #d93025;
+    border: 1px solid #d93025;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    height: fit-content;
+    align-self: flex-start;
+    transition: all 0.2s ease;
+}
+
+.teamMemberContainer .actionButton.remove:hover {
+    background-color: #d93025;
+    color: white;
+}
+
+
+/* File input styling */
+input[type="file"] {
+    padding: 1rem;
+    border: 2px dashed #ccc;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+input[type="file"]:hover {
+    border-color: #0a66c2;
+    background-color: #f0f7ff;
+}
+
+/* Error styling */
+.error {
+    color: #d93025;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #fce8e6;
+    border: 1px solid #d93025;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* Responsive design */
+@media (max-width: 1500px) {
+    .container {
+        margin: 1rem;
+        padding: 2.5rem;
+        max-width: none;
+        width: 95%;
+    }
+
+    .tagInputContainer,
+    .teamMemberContainer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .tagInputContainer input,
+    .teamMemberContainer input {
+        margin-bottom: 0.5rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.35rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        width: 98%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 0.5rem;
+        padding: 1.5rem;
+        width: calc(100% - 1rem);
+    }
+
+    button {
+        min-width: auto;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 0.5rem;
+    }
+
+    .actionButton {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    .tagInputContainer,
+    .teamMemberContainer {
+        flex-direction: column;
+        padding: 1rem;
+    }
+}
+
+/* Focus states for accessibility */
+button:focus,
+input:focus,
+textarea:focus {
+    outline: 2px solid #0a66c2;
+    outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+
+
+
+
+
+/* Dynamic Section Container */
+.dynamicSectionList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Individual Section Block */
+.dynamicSection {
+    border: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+/* Section Title and Content */
+.dynamicSection input[type="text"],
+.dynamicSection textarea {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.dynamicSection textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Add Section Button */
+.addSectionButton {
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background-color: #e7f3ff;
+    color: #0a66c2;
+    border: 1px dashed #0a66c2;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.addSectionButton:hover {
+    background-color: #d4eaff;
+}
+
+
+/* Remove legacy styles that are no longer needed */
+.leftPanel,
+.rightPanel,
+.uploadImage,
+.formSection,
+.formGroup,
+.submitButton,
+.uploadIconContainer,
+.uploadIcon {
+    /* These classes are removed as they're not used in the new design */
+}

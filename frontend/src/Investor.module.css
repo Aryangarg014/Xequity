@@ -1,0 +1,204 @@
+/* LinkedIn-style Investor Page */
+
+.Body {
+  min-height: 100vh;
+  background: #f3f6f8;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+}
+
+.layoutRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1280px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  flex: 1;
+  max-width: calc(100% - 340px);
+}
+
+.filterTagMessage {
+  grid-column: 1 / -1;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.filterTagMessage h2 {
+  color: #0a66c2;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  border: 1px solid #e6e9ec;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+  min-width: 0;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.card:hover,
+.card:focus {
+  box-shadow: 0 4px 20px rgba(10, 102, 194, 0.13);
+  border-color: #0a66c2;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.profileImage {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e6e9ec;
+  margin-bottom: 1.2rem;
+  background: #f4f6fa;
+}
+
+.investorName {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 0.25rem 0;
+  text-align: center;
+}
+
+.investorHeadline {
+  color: #666;
+  font-size: 1rem;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.investorStats {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 0.5rem 0 0.7rem 0;
+}
+
+.stat {
+  color: #0a66c2;
+  font-weight: 600;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.statLabel {
+  color: #888;
+  font-size: 0.95rem;
+  font-weight: 400;
+  display: block;
+}
+
+.cardActions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.actionBtn {
+  background: #0a66c2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.actionBtn:hover,
+.actionBtn:focus {
+  background: #004182;
+}
+
+.detailsLink {
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.noResults {
+  color: #888;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 2rem;
+  grid-column: 1 / -1;
+}
+
+/* Responsive Tweaks */
+@media (max-width: 900px) {
+  .Body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+  }
+
+  .layoutRow {
+    flex-direction: column;
+  }
+
+  .container {
+    max-width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .card {
+    padding: 1.2rem 0.7rem 1rem 0.7rem;
+  }
+
+  .filterTagMessage h2 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .Body {
+    padding: 0.7rem 0.1rem 0.7rem 0.1rem;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    gap: 0.7rem;
+  }
+
+  .card {
+    padding: 0.7rem 0.3rem 0.7rem 0.3rem;
+  }
+
+  .profileImage {
+    width: 60px;
+    height: 60px;
+  }
+
+  .filterTagMessage h2 {
+    font-size: 1.1rem;
+  }
+}

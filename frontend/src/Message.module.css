@@ -1,0 +1,176 @@
+/* LinkedIn-style Message Page */
+
+.Body {
+    min-height: 100vh;
+    background: #f8f9fa;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+}
+
+.flexContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1280px;
+}
+
+.container {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(230, 233, 236, 0.8);
+    padding: 2rem;
+    flex: 1;
+    max-width: 600px;
+    transition: all 0.3s ease;
+}
+
+.container:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.sectionTitle {
+    color: #0a66c2;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    border: 1px solid #e6e9ec;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.content:hover {
+    background: linear-gradient(135deg, #eaf3fb 0%, #f0f8ff 100%);
+    border-color: #0a66c2;
+    box-shadow: 0 4px 15px rgba(10, 102, 194, 0.15);
+    transform: translateY(-1px);
+}
+
+.aboutImage {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #e6e9ec;
+    object-fit: cover;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+.content:hover .aboutImage {
+    border-color: #0a66c2;
+    transform: scale(1.05);
+}
+
+.aboutItems {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.aboutItem {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.aboutItemText h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #222;
+    margin: 0 0 0.25rem 0;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.aboutItemText p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 0.5rem 0;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.4;
+}
+
+.lastMessage {
+    color: #888;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.detailsLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .Body {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .flexContainer {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .Body {
+        padding: 1rem 0.5rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .content {
+        padding: 1rem;
+    }
+
+    .aboutImage {
+        width: 50px;
+        height: 50px;
+    }
+
+    .aboutItemText h3 {
+        font-size: 1rem;
+    }
+
+    .aboutItemText p {
+        font-size: 0.85rem;
+    }
+
+    .lastMessage {
+        font-size: 0.8rem;
+    }
+}

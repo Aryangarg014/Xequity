@@ -1,0 +1,194 @@
+@import "../../vars.css";
+
+.container {
+  position: relative;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(230, 233, 236, 0.8);
+  padding: 2.5rem;
+  margin: 2rem auto;
+  max-width: 1200px;
+  width: 90%;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.container:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.title {
+  color: #0a66c2;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.educationcard {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 1px solid #e6e9ec;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.educationcard:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border-color: #0a66c2;
+  transform: translateY(-1px);
+}
+
+.educationcard h2 {
+  color: #222;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.infoo {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid #e6e9ec;
+  border-radius: 10px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.infoo:last-child {
+  margin-bottom: 0;
+}
+
+.infoo:hover {
+  border-color: #0a66c2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+}
+
+.infoo h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 0.5rem 0;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.infoo p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 0.25rem 0;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.infoo span {
+  font-size: 0.9rem;
+  color: #888;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.aboutItems {
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.aboutItem {
+  display: flex;
+  align-items: flex-start;
+  border-radius: 10px;
+  list-style: none;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  border: 1px solid #e6e9ec;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.aboutItem:hover {
+  background: linear-gradient(135deg, #f0f8ff 0%, #f8f9fa 100%);
+  border-color: #0a66c2;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.aboutItem h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 0.5rem 0;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.aboutItem p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 0.25rem 0;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.companyHeading {
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.3);
+}
+
+.companyHeading h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding: 2rem 1.5rem;
+    margin: 1.5rem auto;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 1.5rem 1rem;
+    margin: 1rem auto;
+  }
+
+  .educationcard {
+    padding: 1rem;
+  }
+
+  .infoo {
+    padding: 1rem;
+  }
+
+  .aboutItem {
+    padding: 1rem;
+  }
+
+  .companyHeading {
+    padding: 0.5rem 0.75rem;
+  }
+}

@@ -43,8 +43,7 @@ const ProfileInfoSchema = new mongoose.Schema({
         }
     ],
     tags: {
-        type: [String], 
-        
+        type: [String]
     } // Array of tags, each of type String
 });
 
