@@ -34,7 +34,7 @@ Xequity is a token-based fundraising platform for startups that preserves equity
 
 ### Prerequisites
 - **Node.js** (v18+)
-- **MongoDB** (local installation or MongoDB Atlas)
+- **MongoDB** and **MongoDB Compass** (local installation)
 - **Ganache** (for local blockchain testing)
 - **MetaMask** browser extension
 - **Git**
@@ -65,7 +65,7 @@ npm run compile
 ```
 
 ### Step 3: Setup MongoDB & Server
-1. **Start MongoDB** (if local) or get MongoDB Atlas connection string
+1. **Start MongoDB** using MongoDB Compass (local installation)
 2. **Setup Server**:
 ```bash
 cd ../server
@@ -109,11 +109,13 @@ npm run dev
 - Open Ganache → Click the key icon next to any account → Copy private key
 
 **Email App Password (Gmail):**
-- Enable 2FA on Gmail → Generate App Password → Use this in EMAIL_PASS
+- Enable 2FA on Gmail → Go to App Passwords → Generate new password → Use this in EMAIL_PASS
 
 **MongoDB Setup:**
-- Local: Install MongoDB and use `mongodb://localhost:27017/Xequity`
-- Atlas: Create free cluster and use connection string
+- Install MongoDB Community Server and MongoDB Compass
+- Start MongoDB service (usually starts automatically after installation)
+- In Compass, connect using: `mongodb://localhost:27017`
+- Database "Xequity" will be created automatically when server runs
 
 **Access the Application:**
 - Frontend: `http://localhost:5173`
@@ -161,10 +163,10 @@ npm test
 ```
 
 ### Test the Full Application
-1. **Start Ganache** → Ensure local blockchain is running
+1. **Start Ganache** → Ensure local blockchain is running on port 7545
 2. **Compile Contracts** → Smart contracts ready for testing
-3. **Start MongoDB** → Local or Atlas connection
-4. **Run Server** → Backend API should be active
+3. **Start MongoDB** → Use MongoDB Compass to connect locally
+4. **Run Server** → Backend API should be active on `http://localhost:3001`
 5. **Launch Frontend** → Access via `http://localhost:5173`
 6. **Connect MetaMask** → Use Ganache network and accounts
 
@@ -177,9 +179,5 @@ npm test
 - **Blockchain Security**: Immutable transaction records
 
 ---
-
-## 👨‍� Developer
-
-**GitHub**: [@Aryangarg014](https://github.com/Aryangarg014)
 
 Built with MERN Stack + Blockchain technology for decentralized fundraising.
